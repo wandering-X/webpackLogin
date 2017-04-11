@@ -1,0 +1,7 @@
+require('angular')
+require('angular-ui-router')
+require('./components/config/config')
+require('./components/button_left/button_left.js')
+require('./components/button_right/button_right.js')
+require('./components/login/login.js')
+require('./components/login_info/login_info.js')

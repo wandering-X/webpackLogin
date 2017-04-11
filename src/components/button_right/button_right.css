@@ -1,0 +1,11 @@
+.button-right{
+	width: 200px;
+	float: right;
+}
+
+.button-right > button{
+	width: 60px;
+	height: 25px;
+	color: #fff;
+	background: yellow;
+}
