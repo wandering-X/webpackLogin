@@ -9,32 +9,42 @@ angular.module("loginInfo", [])
             scope: {}
         }
     })
-    .controller("loginInfoCtrl",["$scope","$http","$state","$stateParams","$httpParamSerializerJQLike", ($scope,$http,$state,$stateParams) => {
-        $scope.mobile = '';
-        $scope.userInfo = null;
-        if ($stateParams.value != '') {
-        $scope.userInfo = angular.fromJson($stateParams.value);
-    }
-        $http({
-            method: "GET",
-            url: "http://192.168.150.181/hswy-basic-web/basic/account/information",
-            params:{
-                'accountId':$scope.userInfo.accountId,
-                'token':$scope.userInfo.accessToken
+    .controller("loginInfoCtrl", ["$scope", "$http", "$state", "constant",
+        ($scope, $http, $state, constant) => {
+            $scope.isLogin = constant.isLogin();
+            if ($scope.isLogin) {
+                $http({
+                    method: "GET",
+                    url: constant.ajaxUrl.userInfo,
+                    params: {
+                        'accountId': constant.userInfo.accountId(),
+                        'token': constant.userInfo.accessToken()
+                    }
+                }).then(function successCallback(response) {
+                    if (response.data.head.code == constant.successCode) {
+                        $scope.mobile = response.data.body.mobile;
+                    }
+                }, function errorCallback(response) {
+                    console.log(response.data.head.msg);
+                });
             }
 
-        }).then(function successCallback(response) {
-            if (response.data.head.code == '00000000') {
-                $scope.mobile = response.data.body.mobile;
+            $scope.openLogin = () => {
+                window.open($state.href("frame.login", {
+                    reload: false
+                }), '_blank');
             }
-        }, function errorCallback(response) {
-            console.log(response.data.head.msg);
-        });
 
-        $scope.userQuit = () => {
-            $scope.mobile = '';
-            $state.go("frame.login",{
-                        reload: false   
-                    });
+            $scope.openReset = () => {
+                constant.userInfo.setMobile($scope.mobile);
+                $state.go("frame.reset", {
+                    reload: false
+                });
+            }
+
+            $scope.userQuit = () => {
+                $scope.isLogin = false;
+                localStorage.clear();
+            }
         }
-    }])
+    ])

@@ -1,9 +1,7 @@
-require("./css/login.css")
-
-angular.module("login", [])
-    .directive('login', () => {
+angular.module("reset", [])
+    .directive('reset', () => {
         return {
-            template: require("./login.html"),
+            template: require("./reset.html"),
             replace: true,
             restrict: "E",
             scope: {}
@@ -20,13 +18,13 @@ angular.module("login", [])
             left: '195px'
         });
     }])
-    .controller("loginCtrl", ["$scope", "$http", "$state", "usSpinnerService", "constant",
+    .controller("resetCtrl", ["$scope", "$http", "$state", "usSpinnerService", "constant",
         ($scope, $http, $state, usSpinnerService, constant) => {
             $scope.showSpinner = false; //loading加载
 
-            //登录按钮是否可用
+            //提交按钮是否可用
             function testDisabled() {
-                if ($scope.loginname && $scope.loginpsd) {
+                if ($scope.password && $scope.newPassword && $scope.comfirmPassword) {
                     $scope.disabled = false;
                 } else {
                     $scope.disabled = true;
@@ -40,52 +38,37 @@ angular.module("login", [])
             }
 
             //请求服务端前，先进行表单验证
-            $scope.userLogin = () => {
-                if (!constant.validType.mobile.test($scope.loginname)) {
-                    $scope.errorMsg = constant.validMsg.mobile;
-                } else if (!constant.validType.password.test($scope.loginpsd)) {
-                    $scope.errorMsg = constant.validMsg.password;
+            $scope.userReset = () => {
+                if (!constant.validType.password.test($scope.newPassword)) {
+                    $scope.errorMsg = "新" + constant.validMsg.password;
+                } else if ($scope.comfirmPassword != $scope.newPassword) {
+                    $scope.errorMsg = constant.validMsg.newPassword;
                 } else {
-                    $scope.showSpinner = true;
-                    loginHttp();
+                    console.log(constant.userInfo.mobile());
+                    resetHttp();
+                    
                 }
             }
 
-            //打开找回密码
-            $scope.openLoginFind = () => {
-                $state.go("frame.loginFind", {
-                    reload: false
-                });
-            }
-
-            //打开注册页面
-            $scope.openRegister = () => {
-                $state.go("frame.register", {
-                    reload: false
-                });
-            }
-
-            //POST请求服务端
-            function loginHttp() {
+            function resetHttp() {
                 $http({
                     method: "POST",
-                    url: constant.ajaxUrl.login,
+                    url: constant.ajaxUrl.reset,
                     headers: {
                         "Content-Type": constant.header.contentType
                     },
                     params: {
-                        'loginName': $scope.loginname,
-                        'password': $scope.loginpsd,
-                        'appId': constant.appInfo.appId
+                        'loginName': constant.userInfo.mobile(),
+                        'oldPassword': $scope.password,
+                        'newPassword': $scope.newPassword,
+                        'token': constant.userInfo.accessToken()
                     }
                 }).then(function successCallback(response) {
                     $scope.showSpinner = false;
                     $scope.errorMsg = response.data.head.msg;
+                    console.log(response);
                     if (response.data.head.code == constant.successCode) {
-                        constant.userInfo.setAccountId(response.data.body.accountInfo.accountId);
-                        constant.userInfo.setAccessToken(response.data.body.accessToken);
-                        constant.setLogin(true);
-
+                        alert('密码修改成功！');
                         $state.go("frame.loginInfo", {reload: false});
                     }
                 }, function errorCallback(response) {

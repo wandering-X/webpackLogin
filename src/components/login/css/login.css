@@ -1,18 +1,13 @@
-/*
- *
- * Template Name: Fullscreen Login
- * Description: Login Template with Fullscreen Background Slideshow
- * Author: Anli Zaimi
- * Author URI: http://azmind.com
- *
- */
-
 
 body {
     background: #caf8f8;
     font-family:  Helvetica, Arial, sans-serif;
     text-align: center;
     color: #fff;
+    -moz-user-select:none;/*火狐*/
+    -webkit-user-select:none;/*webkit浏览器*/
+    -ms-user-select:none;/*IE10*/
+    user-select:none;
 }
 
 .page-container {
@@ -22,27 +17,6 @@ body {
     min-width: 1100px;
     min-height: 500px;
     margin: 120px auto 0 auto;
-}
-
-.logo-bg{
-    margin-top: 45px;
-    width: 300px;
-    height: 400px;
-    overflow: hidden;
-    position: absolute;
-    left: 220px;
-}
-
-.logo-bg img{
-    width: 150px;
-    height: 150px;
-}
-
-.logo-bg h2{
-    margin-top: 20px;
-    font-size: 28px;
-    font-weight: 400;
-    text-align: center;
 }
 
 .login-box{
@@ -110,6 +84,10 @@ input:focus {
         0 2px 7px 0 rgba(0,0,0,.2);
 }
 
+.login-btn {
+    position: relative;
+}
+
 button {
     cursor: pointer;
     width: 300px;
@@ -163,19 +141,31 @@ button:active {
     box-shadow:        
         0 5px 8px 0 rgba(0,0,0,.1) inset,
         0 1px 4px 0 rgba(0,0,0,.1);
+}
 
-    border: 0px solid #ef4300;
+button:focus{
+    outline: none;
+      }
+
+button.disabled{
+    background: #ccc;
+    border: 1px solid #acc;
 }
 
 .forgetpsd{
     margin-top: 15px;
     position: absolute;
-    right: 30px;
+    right: 17px;
 }
 
 .forgetpsd a{
     font-size: 14px;
-    color: #DEDCDC;
+    color: #fff;
+    text-decoration: none;
+}
+
+.forgetpsd a.register-link{
+    color: #24abe2;
 }
 
 .forgetpsd a:hover{
