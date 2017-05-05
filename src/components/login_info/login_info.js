@@ -46,5 +46,20 @@ angular.module("loginInfo", [])
                 $scope.isLogin = false;
                 localStorage.clear();
             }
+
+            $http({
+                    method: "GET",
+                    url: "/api2/pics?query=美女&start=0&reqType=ajax&reqFrom=result",
+                    params: {
+                        
+                    }
+                }).then(function successCallback(response) {
+                    console.log("成功！");
+                    $scope.imgUrl = response.data.items[0].smallThumbUrl;
+                    console.log(response.data.items[0].smallThumbUrl);
+
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
         }
     ])

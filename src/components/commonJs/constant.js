@@ -62,6 +62,7 @@ angular.module("constant", [])
             setLogin: setLogin,
             isLogin: getLogin,
             successCode: "00000000",
+            imgNum: 40,
             header: {
                 contentType: "application/x-www-form-urlencoded",
                 timestamp: "1492075692799",
@@ -104,7 +105,9 @@ angular.module("constant", [])
                 findLogin: 'http://192.168.150.181/hswy-basic-web/basic/account/password/retrieve',
                 register: 'http://192.168.150.181/hswy-basic-web/basic/account/register',
                 isRegister: 'http://192.168.150.181/hswy-basic-web/basic/account/existed',
-                reset: 'http://192.168.150.181/hswy-basic-web/basic/account/password/reset'
+                reset: 'http://192.168.150.181/hswy-basic-web/basic/account/password/reset',
+                huaban: 'http://img.hb.aicdn.com/',
+                findApi: 'http://api.huaban.com/'
             }
         }
     }])

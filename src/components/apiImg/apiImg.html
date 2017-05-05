@@ -1,0 +1,11 @@
+<div class="apiImg-bg">
+    <div class="waterfall" ng-controller="apiImgCtrl">
+        <div class="waterfall-img" index=1 ng-repeat="img in imgInfo">
+            <a  ng-click="openImg(url)">
+                <div class="cover-white"></div>
+                <img ng-src="{{img.url + '_fw320'}}">
+            </a>
+            <span>{{img.title}}</span>
+        </div>
+    </div>
+</div>

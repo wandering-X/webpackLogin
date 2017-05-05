@@ -4,7 +4,6 @@ var htmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var rimraf = require("rimraf");
 
-
 var ENV = process.env.npm_lifecycle_event;
 var isServer = ENV === 'server';
 var isDev = ENV === 'dev';
@@ -13,17 +12,22 @@ var isDev = ENV === 'dev';
 
 module.exports = {
     entry: {
-        app: './src/entry.js',
+        app: './src/entry.js',  
         vendor: "angular"
     },
     output: {
         path: __dirname + '/dist/',
-        publicPath: isDev ? "/" : 'http://localhost:8080/',
+        publicPath: isDev ? "" : 'http://localhost:8080/',
         filename: 'js/[name].[hash].js',
         // chunkFilename: '[name].[hash].js'
     },
+
     module: {
         loaders: [
+            { 
+                test: require.resolve("jquery"), 
+                loader: "expose-loader?$!expose-loader?jQuery" 
+            },
             // { test: /\.css$/, loader: 'style-loader!css-loader' },
             {
                 test: /\.css$/,
@@ -38,7 +42,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg)$/,
+                test: /\.(png|jpg|ico)$/,
                 loader: 'file-loader?name=images/[hash:8].[name].[ext]'
             },
             {
@@ -62,7 +66,7 @@ module.exports = {
         new ExtractTextPlugin({
             filename: 'styles/[name].[chunkhash].css',
             allChunks: true
-        }),
+        })
     ],
     devServer: {
         contentBase: './src',
