@@ -13,19 +13,37 @@ angular.module("apiImg", [])
         ($scope, $location, $anchorScroll, $http, $state, constant) => {
             var imgId, item;
             var imgKey = [];
-            var $boxs;
+            var $boxs,imgIndex = [];
             imgApiHttp();
-            getIndex();
 
-            function getIndex() {
-                $boxs = $('.waterfall-img');
-                $boxs.each(function(index) {
-                    $(this).attr('index', index);
-                    alert($(this).attr('index'));
-                });
+            $scope.checkRepeat = function ($last) {
+                if ($last) {
+                     getIndex();
+                    
+                }
             }
 
+            function getIndex() {
+                var lastIndex;
+                $boxs = $('.waterfall-img');
+                $boxs.each(function (index) {
+                    $(this).attr('index', index + 1);
+                    lastIndex = ( index + 1 );
+                });
+                console.log(lastIndex);
+            }
 
+            function getTop() {
+                $boxs.each(function(index){
+                    if(index <= 5){
+                        $(this).css('top','0');
+                    }else{
+                        imgIndex[index] = $(this).attr('index');
+                        // lastIndex[index] = 
+                        $(this).css('top',getLastTop()+'px');
+                    }
+                });
+            }
 
             function imgApiHttp() {
                 $http({
@@ -42,7 +60,6 @@ angular.module("apiImg", [])
                         $scope.imgInfo[i].url = '//img.hb.aicdn.com/' + response.data.pins[i].file.key;
                         $scope.imgInfo[i].title = response.data.pins[i].board.title;
                     }
-                    getIndex();
                 }, function errorCallback() {
                     console.log('图片加载失败！');
                 });

@@ -12,11 +12,12 @@
     width: 1240px;
     margin: 0 auto;
     margin-top: 20px;
-    overflow-y: hidden;
 }
 
 .waterfall-img{
-    float:left;
+    position: absolute;
+    top: 0;
+    left: 0;
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     -moz-box-shadow: 0 1px 3px rgba(0,0,0,.3);

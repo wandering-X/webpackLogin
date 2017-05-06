@@ -3,7 +3,7 @@ webpackJsonp([0],[
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"apiImg-bg\">\r\n    <div class=\"waterfall\" ng-controller=\"apiImgCtrl\">\r\n        <div class=\"waterfall-img\" index=1 ng-repeat=\"img in imgInfo\">\r\n            <a  ng-click=\"openImg(url)\">\r\n                <div class=\"cover-white\"></div>\r\n                <img ng-src=\"{{img.url + '_fw320'}}\">\r\n            </a>\r\n            <span>{{img.title}}</span>\r\n        </div>\r\n    </div>\r\n</div>";
+module.exports = "<div class=\"apiImg-bg\">\r\n    <div class=\"waterfall\" ng-controller=\"apiImgCtrl\">\r\n        <div class=\"waterfall-img\" index=1 ng-repeat=\"img in imgInfo\" ng-init=\"checkRepeat($last)\">\r\n            <a  ng-click=\"openImg(img.url)\">\r\n                <div class=\"cover-white\"></div>\r\n                <img ng-src=\"{{img.url + '_fw320'}}\">\r\n            </a>\r\n            <span>{{img.title}}</span>\r\n        </div>\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 2 */
@@ -5370,15 +5370,34 @@ angular.module("apiImg", []).directive('apiImg', () => {
 }).controller("apiImgCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$state", "constant", ($scope, $location, $anchorScroll, $http, $state, constant) => {
     var imgId, item;
     var imgKey = [];
-    var $boxs;
+    var $boxs,
+        imgIndex = [];
     imgApiHttp();
-    getIndex();
+
+    $scope.checkRepeat = function ($last) {
+        if ($last) {
+            getIndex();
+        }
+    };
 
     function getIndex() {
         $boxs = $('.waterfall-img');
         $boxs.each(function (index) {
-            $(this).attr('index', index);
-            alert($(this).attr('index'));
+            $(this).attr('index', index + 1);
+            var lastIndex = index + 1;
+        });
+        console.log(lastIndex);
+    }
+
+    function getTop() {
+        $boxs.each(function (index) {
+            if (index <= 5) {
+                $(this).css('top', '0');
+            } else {
+                imgIndex[index] = $(this).attr('index');
+                // lastIndex[index] = 
+                $(this).css('top', getLastTop() + 'px');
+            }
         });
     }
 
@@ -5397,7 +5416,6 @@ angular.module("apiImg", []).directive('apiImg', () => {
                 $scope.imgInfo[i].url = '//img.hb.aicdn.com/' + response.data.pins[i].file.key;
                 $scope.imgInfo[i].title = response.data.pins[i].board.title;
             }
-            getIndex();
         }, function errorCallback() {
             console.log('图片加载失败！');
         });
