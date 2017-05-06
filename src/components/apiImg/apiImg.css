@@ -1,4 +1,5 @@
-.apiImg-bg,.waterfall{
+.apiImg-bg,
+.waterfall {
     height: 100%;
 }
 
@@ -14,24 +15,21 @@
     margin-top: 20px;
 }
 
-.waterfall-img{
+.waterfall-img {
+    width: 236px;
     position: absolute;
-    top: 0;
-    left: 0;
     background-color: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,.3);
-    -moz-box-shadow: 0 1px 3px rgba(0,0,0,.3);
-    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 }
 
-.waterfall-img > a{
+.waterfall-img>a {
     position: relative;
-    display: block;
-    min-height: 150px;
     width: 236px;
 }
 
-.cover-white{
+.cover-white {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -40,17 +38,24 @@
     z-index: 3;
 }
 
-.waterfall-img > a:hover .cover-white{
-    background-color: rgba(255,255,255,.1);
+.waterfall-img>a:hover .cover-white {
+    background-color: rgba(255, 255, 255, .1);
 }
 
-.waterfall-img > a > img{
-    width:100%;
+.waterfall-img>a>img {
+    width: 100%;
+    display: block;
 }
 
-.waterfall-img span{
+.waterfall-img span {
     display: block;
     font-size: 12px;
     text-align: center;
     padding: 10px 16px;
+}
+
+#loading {
+    position: absolute;
+    width: 100%;
+    left: 0;
 }
