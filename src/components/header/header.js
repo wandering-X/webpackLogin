@@ -9,8 +9,11 @@ angular.module("header", [])
             scope: {}
         }
     })
-    .controller("headerCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$state", "constant",
-        ($scope, $location, $anchorScroll, $http, $state, constant) => {
+    .controller("headerCtrl", ["$scope", "$state", "constant",
+        ($scope, $state, constant) => {
+            var items;
+            var li = $('.header-left>ul>li');
+
             //回到顶部
             $('#elevator').hide();
             $scope.gotoTop = function () {
@@ -48,15 +51,27 @@ angular.module("header", [])
                 $scope.isShowLoginIframe = false;
             }
 
-            var li = $('.header-left>ul>li');
+            //刷新页面时，保持当前主题专栏tab的高亮状态
+            var location = window.location.href.split('=');
+            console.log(encodeURI(location[1]));
+            if (location[1] != undefined) {
+                li.each(function () {
+                    $(this).removeClass('active');
+                    if (encodeURI($(this).children().text()) == location[1]) {
+                        $(this).addClass('active');
+                    }
+                });
+            }
 
-            //进入主题专栏
+            //点击进入相应的主题专栏
             li.click(function () {
                 li.removeClass('active');
                 $(this).addClass('active');
-                item = li.children().text();
-                $state.go("frame.apiImg", {
-                    reload: true
+                items = $(this).children().text();
+                $state.go('frame.apiImg', {
+                    value: items
+                }, {
+                    reload: false
                 });
             });
 

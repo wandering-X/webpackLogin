@@ -648,7 +648,7 @@ h1 {
 .waterfall {
     position: relative;
     width: 1240px;
-    min-height: 500px;
+    min-height: 700px;
     margin: 0 auto;
     margin-top: 20px;
     overflow: hidden;

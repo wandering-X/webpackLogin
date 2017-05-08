@@ -5367,7 +5367,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
         restrict: "E",
         scope: {}
     };
-}).controller("apiImgCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$compile", "$state", "constant", ($scope, $location, $anchorScroll, $http, $compile, $state, constant) => {
+}).controller("apiImgCtrl", ["$scope", "$http", "$state", "constant", "$stateParams", ($scope, $http, $state, constant, $stateParams) => {
     var imgId,
         $box,
         imgObjNum = 0,
@@ -5382,6 +5382,13 @@ angular.module("apiImg", []).directive('apiImg', () => {
         imgLeft = [],
         imgColH = new Array(imgColNum);
     $scope.imgInfo = [];
+    $('#loading').css({ 'position': 'absolute', 'top': '50%', 'left': '0' });
+    var item = $stateParams.value;
+
+    // // console.log(window.location.href);
+    // if (location[1] == undefined ) {
+    //     window.location.href = window.location.href + '?item=' + item;
+    // }
 
     for (var y = 0; y < imgColNum; y++) {
         imgLeft[y] = imgW * y;
@@ -5421,7 +5428,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
     //进行滚动加载
     window.onscroll = function () {
         if (checkScroll()) {
-            imgApiHttp(lastIndex);
+            imgApiHttp(lastIndex, item);
             $scope.checkRepeat;
         }
     };
@@ -5434,13 +5441,14 @@ angular.module("apiImg", []).directive('apiImg', () => {
         return documentH - windowH - scrollTop == 0 ? true : false;
     }
 
-    imgApiHttp(lastIndex);
+    imgApiHttp(lastIndex, item);
     //检测ng-repeat是否已经渲染完毕，如果是再设置瀑布流图片的位置，
     //否则获取图片位置时会出错，因为ng-repeat还没渲染完
     $scope.checkRepeat = function ($last) {
         if ($last) {
             $boxs = $('.waterfall-img');
             boxsLen = $boxs.length;
+            $('#loading').css('position', '');
             setPosition(lastIndex);
             showIcon();
         }
@@ -5476,7 +5484,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
     }
 
     //发送请求，获取图片
-    function imgApiHttp(Index) {
+    function imgApiHttp(Index, Item) {
         $http({
             method: "get",
             url: '/api1/all',
@@ -5637,7 +5645,7 @@ angular.module("app", ["ui.router", "angularSpinner", "constant", "login",
         url: "/frame.home",
         template: __webpack_require__(2)
     }).state("frame.apiImg", {
-        url: "/frame.apiImg",
+        url: "/frame.apiImg?:value",
         template: __webpack_require__(1)
     });
     // .state("frame.login", {
@@ -5675,14 +5683,16 @@ angular.module("header", []).directive('header', () => {
         restrict: "E",
         scope: {}
     };
-}).controller("headerCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$state", "constant", ($scope, $location, $anchorScroll, $http, $state, constant) => {
+}).controller("headerCtrl", ["$scope", "$state", "constant", ($scope, $state, constant) => {
+    var items;
+    var li = $('.header-left>ul>li');
+
     //回到顶部
+    $('#elevator').hide();
     $scope.gotoTop = function () {
-        // $location.hash("top");
-        // $anchorScroll();
         $(document).scrollTop('0');
     };
-    $('#elevator').hide();
+
     $(document).scroll(function () {
         if ($('body').scrollTop() <= '100') {
             $('#elevator').hide();
@@ -5714,27 +5724,27 @@ angular.module("header", []).directive('header', () => {
         $scope.isShowLoginIframe = false;
     };
 
-    var li = $('.header-left>ul>li');
+    var location = window.location.href.split('=');
+    console.log(encodeURI(location[1]));
+    if (location[1] != undefined) {
+        li.each(function () {
+            $(this).removeClass('active');
 
-    // function imgHttp(key) {
-    //     $http({
-    //         method: "get",
-    //         url: constant.ajaxUrl.huaban + key + '_fw320'
-    //     }).then(function successCallback(response) {
-    //         for (var i = 0; i < constant.imgNum; i++) {
-    //             imgKey[i] = response.pins.file[i].key;
-    //         }
-    //     }, errorCallback);
-    // }
+            if (encodeURI($(this).children().text()) == location[1]) {
+                $(this).addClass('active');
+            }
+        });
+    }
 
-
-    //进入专栏
+    //进入主题专栏
     li.click(function () {
         li.removeClass('active');
         $(this).addClass('active');
-        item = li.children().text();
-        $state.go("frame.apiImg", {
-            reload: true
+        items = $(this).children().text();
+        $state.go('frame.apiImg', {
+            value: items
+        }, {
+            reload: false
         });
     });
 

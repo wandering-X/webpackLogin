@@ -9,8 +9,8 @@ angular.module("apiImg", [])
             scope: {}
         }
     })
-    .controller("apiImgCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$compile", "$state", "constant",
-        ($scope, $location, $anchorScroll, $http, $compile, $state, constant) => {
+    .controller("apiImgCtrl", ["$scope", "$http", "$state", "constant", "$stateParams",
+        ($scope, $http, $state, constant, $stateParams) => {
             var imgId,
                 $box,
                 imgObjNum = 0,
@@ -25,6 +25,14 @@ angular.module("apiImg", [])
                 imgLeft = [],
                 imgColH = new Array(imgColNum);
             $scope.imgInfo = [];
+            $('#loading').css({'position':'absolute','top':'50%','left':'0'});
+            var item = $stateParams.value;
+            
+            
+            // // console.log(window.location.href);
+            // if (location[1] == undefined ) {
+            //     window.location.href = window.location.href + '?item=' + item;
+            // }
 
             for (var y = 0; y < imgColNum; y++) {
                 imgLeft[y] = imgW * y;
@@ -39,22 +47,22 @@ angular.module("apiImg", [])
                     $(this).parent().find('.collect-small').hide();
                     $(this).parent().find('.download-small').hide();
                 });
-                $('.collect-small').hover(function(){
+                $('.collect-small').hover(function () {
                     $(this).find('i').css('background-position', '-208px -1px');
-                },function(){
-                     $(this).find('i').css('background-position', '-175px -1px');
+                }, function () {
+                    $(this).find('i').css('background-position', '-175px -1px');
                 });
-                $('.download-small').hover(function(){
+                $('.download-small').hover(function () {
                     $(this).find('i').css('background-position', '-106px -1px');
-                },function(){
-                     $(this).find('i').css('background-position', '-71px -1px');
+                }, function () {
+                    $(this).find('i').css('background-position', '-71px -1px');
                 });
-                $('.collect-small').mousemove(function(){
+                $('.collect-small').mousemove(function () {
                     $(this).find('i').css('background-position', '-208px -1px');
                     $(this).parent().find('.download-small').show();
                     $(this).show();
                 });
-                $('.download-small').mousemove(function(){
+                $('.download-small').mousemove(function () {
                     $(this).find('i').css('background-position', '-106px -1px');
                     $(this).parent().find('.collect-small').show();
                     $(this).show();
@@ -64,7 +72,7 @@ angular.module("apiImg", [])
             //进行滚动加载
             window.onscroll = function () {
                 if (checkScroll()) {
-                    imgApiHttp(lastIndex);
+                    imgApiHttp(lastIndex, item);
                     $scope.checkRepeat;
                 }
             }
@@ -77,13 +85,14 @@ angular.module("apiImg", [])
                 return (documentH - windowH - scrollTop == 0) ? true : false;
             }
 
-            imgApiHttp(lastIndex);
+            imgApiHttp(lastIndex, item);
             //检测ng-repeat是否已经渲染完毕，如果是再设置瀑布流图片的位置，
             //否则获取图片位置时会出错，因为ng-repeat还没渲染完
             $scope.checkRepeat = function ($last) {
                 if ($last) {
                     $boxs = $('.waterfall-img');
                     boxsLen = $boxs.length;
+                    $('#loading').css('position','');
                     setPosition(lastIndex);
                     showIcon();
                 }
@@ -119,7 +128,7 @@ angular.module("apiImg", [])
             }
 
             //发送请求，获取图片
-            function imgApiHttp(Index) {
+            function imgApiHttp(Index, Item) {
                 $http({
                     method: "get",
                     url: '/api1/all',
