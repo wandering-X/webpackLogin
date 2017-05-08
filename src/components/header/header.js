@@ -12,10 +12,11 @@ angular.module("header", [])
     .controller("headerCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$state", "constant",
         ($scope, $location, $anchorScroll, $http, $state, constant) => {
             //回到顶部
+            $('#elevator').hide();
             $scope.gotoTop = function () {
-                $location.hash("top");
-                $anchorScroll();
+                $(document).scrollTop('0');
             };
+
             $(document).scroll(function () {
                 if ($('body').scrollTop() <= '100') {
                     $('#elevator').hide();
@@ -48,21 +49,8 @@ angular.module("header", [])
             }
 
             var li = $('.header-left>ul>li');
-            
 
-            // function imgHttp(key) {
-            //     $http({
-            //         method: "get",
-            //         url: constant.ajaxUrl.huaban + key + '_fw320'
-            //     }).then(function successCallback(response) {
-            //         for (var i = 0; i < constant.imgNum; i++) {
-            //             imgKey[i] = response.pins.file[i].key;
-            //         }
-            //     }, errorCallback);
-            // }
-
-            
-            
+            //进入主题专栏
             li.click(function () {
                 li.removeClass('active');
                 $(this).addClass('active');

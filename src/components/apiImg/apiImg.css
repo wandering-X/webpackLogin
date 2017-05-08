@@ -11,8 +11,10 @@
 .waterfall {
     position: relative;
     width: 1240px;
+    min-height: 500px;
     margin: 0 auto;
     margin-top: 20px;
+    overflow: hidden;
 }
 
 .waterfall-img {
@@ -24,30 +26,26 @@
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 }
 
-.waterfall-img>a {
-    position: relative;
-    width: 236px;
-}
-
 .cover-white {
     position: absolute;
-    top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
+    top: 0;
+    width: 236px;
     z-index: 3;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
 }
 
-.waterfall-img>a:hover .cover-white {
-    background-color: rgba(255, 255, 255, .1);
+.cover-white:hover {
+    background-color: rgba(255, 255, 255, .2);
 }
 
-.waterfall-img>a>img {
+.waterfall-img>img {
     width: 100%;
     display: block;
 }
 
-.waterfall-img span {
+.waterfall-img > span.img-title {
     display: block;
     font-size: 12px;
     text-align: center;
@@ -55,7 +53,43 @@
 }
 
 #loading {
-    position: absolute;
     width: 100%;
-    left: 0;
+    margin: 10px auto;
+}
+
+.collect-small,.download-small{
+    position: absolute;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+    display: none;
+    cursor: pointer;
+    z-index: 5;
+    background-color: rgba(255, 255, 255, .8);
+    border: 1px solid rgba(0, 0, 0, .5);
+}
+
+.collect-small{
+    left: 5px;
+}
+
+
+.download-small{
+    right: 5px;
+}
+
+.collect-small > i{
+    display: block;
+    margin: 5px;
+    background: url(../commonStyle/img/icon.png) no-repeat -175px -2px;
+	width: 20px;
+	height: 19px;
+}
+
+.download-small > i{
+    display: block;
+    margin: 4px 5px;
+    background: url(../commonStyle/img/icon.png) no-repeat -71px -1px;
+	width: 22px;
+	height: 20px;
 }

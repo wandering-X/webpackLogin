@@ -3,7 +3,7 @@ webpackJsonp([0],[
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"apiImg-bg\">\r\n    <div class=\"waterfall\" ng-controller=\"apiImgCtrl\">\r\n        <div class='waterfall-img' index=1 ng-repeat='img in imgInfo' ng-init='checkRepeat($last)'>\r\n            <a ng-click='openImg(img.url)'>\r\n                <div class='cover-white'></div>\r\n                <img ng-src='{{img.smallUrl}}'>\r\n            </a>\r\n            <span>{{img.title}}</span>\r\n        </div>\r\n        <div id=\"loading\" ng-show=\"isLoading\">正在加载中...</div>\r\n    </div>\r\n</div>";
+module.exports = "<div class=\"apiImg-bg\" ng-controller=\"apiImgCtrl\">\r\n    <div class=\"waterfall\">\r\n        <div class='waterfall-img' index=1 ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>\r\n            <img ng-src='{{img.smallUrl}}' title='点击查看大图'>\r\n            <span class='cover-white' ng-click='openImg(img.url)'></span>\r\n            <a class=\"collect-small\" ng-click=\"collect(img.smallUrl)\"><i></i></a>\r\n            <a class=\"download-small\" ng-href=\"{{img.url}}\" download><i></i></a>\r\n            <span class=\"img-title\">{{img.title}}</span>\r\n        </div>\r\n    </div>\r\n    <div id=\"loading\">正在加载中...</div>\r\n</div>";
 
 /***/ }),
 /* 2 */
@@ -5367,106 +5367,138 @@ angular.module("apiImg", []).directive('apiImg', () => {
         restrict: "E",
         scope: {}
     };
-}).controller("apiImgCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$interval", "$state", "constant", ($scope, $location, $anchorScroll, $http, $interval, $state, constant) => {
+}).controller("apiImgCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$compile", "$state", "constant", ($scope, $location, $anchorScroll, $http, $compile, $state, constant) => {
     var imgId,
-        item,
         $box,
+        imgObjNum = 0,
+        boxsLen = 0,
         minColH,
         minHIndex,
         lastIndex = 0,
         imgKey = [],
         $boxs = [],
-        imgIndex = [],
         imgW = 251,
         imgColNum = 5,
         imgLeft = [],
         imgColH = new Array(imgColNum);
+    $scope.imgInfo = [];
 
     for (var y = 0; y < imgColNum; y++) {
         imgLeft[y] = imgW * y;
     }
 
-    waterfall();
-    window.onscroll = function () {
-        if (checkScroll()) {
-            var $loading = $("#loading");
-            var $oBox = $("<div class='waterfall-img'' index=1 ng-repeat='img in imgInfo' ng-init='checkRepeat($last)'>").before($loading);
-            var $oA = $("<a ng-click='openImg(img.url)'>").appendTo($oBox);
-            var $oDiv = $("<div class='cover-white'></div>").appendTo($oA);
-            $("<img ng-src='{{img.smallUrl}}'>").after($oDiv);
-            $("<span>{{img.title}}</span>").after($oA);
-            waterfall();
-        };
-    };
-
-    function checkScroll() {
-        var scrollBottomH = minColH - 100;
-        var scrollTop = $(window).scrollTop();
-        var documentH = $(document).height();
-        return scrollBottomH < scrollTop + documentH ? true : false;
+    //显示、隐藏收藏和下载图标
+    function showIcon() {
+        $('.cover-white').hover(function () {
+            $(this).parent().find('.collect-small').show();
+            $(this).parent().find('.download-small').show();
+        }, function () {
+            $(this).parent().find('.collect-small').hide();
+            $(this).parent().find('.download-small').hide();
+        });
+        $('.collect-small').hover(function () {
+            $(this).find('i').css('background-position', '-208px -1px');
+        }, function () {
+            $(this).find('i').css('background-position', '-175px -1px');
+        });
+        $('.download-small').hover(function () {
+            $(this).find('i').css('background-position', '-106px -1px');
+        }, function () {
+            $(this).find('i').css('background-position', '-71px -1px');
+        });
+        $('.collect-small').mousemove(function () {
+            $(this).find('i').css('background-position', '-208px -1px');
+            $(this).parent().find('.download-small').show();
+            $(this).show();
+        });
+        $('.download-small').mousemove(function () {
+            $(this).find('i').css('background-position', '-106px -1px');
+            $(this).parent().find('.collect-small').show();
+            $(this).show();
+        });
     }
 
-    function waterfall() {
-        imgApiHttp(lastIndex);
-        $scope.checkRepeat = function ($last) {
-            if ($last) {
-                $scope.isLoading = false;
-                $boxs = $('.waterfall-img');
-                boxsLen = $boxs.length;
-                setPosition(lastIndex);
-            }
-        };
-
-        function setPosition(Index) {
-            for (var j = Index; j < boxsLen; j++) {
-                $box = $boxs.eq(j);
-                $box.attr('index', j + 1);
-                var $img = $box.find('a>img');
-                $scope.imgInfo[j].height = (imgW - 15) / $scope.imgInfo[j].file.width * $scope.imgInfo[j].file.height;
-                $img.css('height', $scope.imgInfo[j].height + 'px');
-
-                if (j < imgColNum) {
-                    $box.css({
-                        'left': imgLeft[j % imgColNum] + 'px',
-                        'top': '0px'
-                    });
-                    imgColH[j] = $box.height();
-                    console.log(j);
-                } else {
-                    minColH = Math.min.apply(null, imgColH);
-                    minHIndex = $.inArray(minColH, imgColH);
-                    $box.css({
-                        'left': imgLeft[minHIndex % imgColNum] + 'px',
-                        'top': minColH + 15 + 'px'
-                    });
-                    imgColH[minHIndex] = $box.height() + $box.position().top;
-                }
-            }
-            lastIndex = j;
-            console.log(lastIndex);
+    //进行滚动加载
+    window.onscroll = function () {
+        if (checkScroll()) {
+            imgApiHttp(lastIndex);
+            $scope.checkRepeat;
         }
+    };
 
-        function imgApiHttp(Index) {
-            $scope.isLoading = true;
-            $http({
-                method: "get",
-                url: '/api1/all',
-                params: {
-                    'limit': constant.imgNum,
-                    'max': imgId == undefined ? '' : imgId
-                }
-            }).then(function successCallback(response) {
-                $scope.imgInfo = response.data.pins;
-                imgId = response.data.pins[constant.imgNum - 1].pin_id;
-                for (var i = Index; i < constant.imgNum; i++) {
-                    $scope.imgInfo[i].url = '//img.hb.aicdn.com/' + response.data.pins[i].file.key;
-                    $scope.imgInfo[i].smallUrl = $scope.imgInfo[i].url + '_fw320';
-                    $scope.imgInfo[i].title = response.data.pins[i].board.title;
-                }
-            }, function errorCallback() {
-                console.log('图片加载失败！');
-            });
+    //监测页面滚动，判断是否可以加载更多图片
+    function checkScroll() {
+        var scrollTop = $(document).scrollTop(),
+            documentH = $(document).height(),
+            windowH = $(window).height();
+        return documentH - windowH - scrollTop == 0 ? true : false;
+    }
+
+    imgApiHttp(lastIndex);
+    //检测ng-repeat是否已经渲染完毕，如果是再设置瀑布流图片的位置，
+    //否则获取图片位置时会出错，因为ng-repeat还没渲染完
+    $scope.checkRepeat = function ($last) {
+        if ($last) {
+            $boxs = $('.waterfall-img');
+            boxsLen = $boxs.length;
+            setPosition(lastIndex);
+            showIcon();
         }
+    };
+
+    //设置瀑布流图片的位置
+    function setPosition(Index) {
+        for (var j = Index; j < boxsLen; j++) {
+            $box = $boxs.eq(j);
+            var $img = $box.find('img');
+            $box.attr('index', j);
+            $scope.imgInfo[j].height = (imgW - 15) / $scope.imgInfo[j].width * $scope.imgInfo[j].height;
+            $img.css('height', $scope.imgInfo[j].height + 'px');
+            $('.cover-white').eq(j).css('height', $scope.imgInfo[j].height + 'px');
+            if (j < imgColNum) {
+                $box.css({
+                    'left': imgLeft[j % imgColNum] + 'px',
+                    'top': '0px'
+                });
+                imgColH[j] = $box.height();
+            } else {
+                minColH = Math.min.apply(null, imgColH);
+                minHIndex = $.inArray(minColH, imgColH);
+                $box.css({
+                    'left': imgLeft[minHIndex % imgColNum] + 'px',
+                    'top': minColH + 15 + 'px'
+                });
+                imgColH[minHIndex] = $box.height() + $box.position().top;
+            }
+        }
+        $('.waterfall').css('height', minColH + 'px');
+        lastIndex = j;
+    }
+
+    //发送请求，获取图片
+    function imgApiHttp(Index) {
+        $http({
+            method: "get",
+            url: '/api1/all',
+            params: {
+                'limit': constant.imgNum,
+                'max': imgId == undefined ? '' : imgId
+            }
+        }).then(function successCallback(response) {
+            imgId = response.data.pins[constant.imgNum - 1].pin_id; //获取不同图片的标志
+            for (var a = 0; a < constant.imgNum; a++) {
+                //向$scope.imgInfo依次添加对象和属性
+                $scope.imgInfo.push({
+                    'url': '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
+                    'smallUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key + '_fw320',
+                    'title': response.data.pins[a].board.title,
+                    'height': response.data.pins[a].file.height,
+                    'width': response.data.pins[a].file.width
+                });
+            }
+        }, function errorCallback() {
+            $('#loading').text('图片加载失败！');
+        });
     }
 }]);
 
@@ -5646,9 +5678,11 @@ angular.module("header", []).directive('header', () => {
 }).controller("headerCtrl", ["$scope", "$location", "$anchorScroll", "$http", "$state", "constant", ($scope, $location, $anchorScroll, $http, $state, constant) => {
     //回到顶部
     $scope.gotoTop = function () {
-        $location.hash("top");
-        $anchorScroll();
+        // $location.hash("top");
+        // $anchorScroll();
+        $(document).scrollTop('0');
     };
+    $('#elevator').hide();
     $(document).scroll(function () {
         if ($('body').scrollTop() <= '100') {
             $('#elevator').hide();
@@ -5694,6 +5728,7 @@ angular.module("header", []).directive('header', () => {
     // }
 
 
+    //进入专栏
     li.click(function () {
         li.removeClass('active');
         $(this).addClass('active');

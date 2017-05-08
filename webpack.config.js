@@ -64,7 +64,7 @@ module.exports = {
             names: ['vendor', 'manifest']
         }),
         new ExtractTextPlugin({
-            filename: 'styles/[name].[chunkhash].css',
+            filename: './[name].[chunkhash].css',
             allChunks: true
         })
     ],

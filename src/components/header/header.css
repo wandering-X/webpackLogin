@@ -29,7 +29,9 @@
 .header-left ul {
     height: 33px;
     display: -webkit-flex;
+    display: flex;
     -webkit-align-items: center;
+    align-items: center;
 }
 
 .header-left ul li {
@@ -88,7 +90,7 @@
 }
 
 .register-btn:hover {
-    background-color: #13bfff;
+    background-color: #24B4E0;
 }
 
 .login-div {
@@ -191,7 +193,7 @@
 }
 
 .search-box>form>a:hover {
-    background-color: #13bfff;
+    background-color: #24B4E0;
 }
 
 .search-box>form>a>img {
