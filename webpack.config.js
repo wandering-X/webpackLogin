@@ -13,7 +13,7 @@ var isDev = ENV === 'dev';
 module.exports = {
     entry: {
         app: './src/entry.js',  
-        vendor: "angular"
+        vendor: ["angular", "jquery"]
     },
     output: {
         path: __dirname + '/dist/',
@@ -42,7 +42,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|ico)$/,
+                test: /\.(png|jpg|ico|gif)$/,
                 loader: 'file-loader?name=images/[hash:8].[name].[ext]'
             },
             {

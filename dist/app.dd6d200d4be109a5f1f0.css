@@ -207,6 +207,10 @@ transition-duration: .3s;
     margin-right: 0;
 }
 
+.link-care ul > li >a{
+    cursor: default;
+}
+
 .footer-copyRight{
     text-align: center;
     padding: 20px 0;
@@ -265,7 +269,7 @@ transition-duration: .3s;
 
 .header-left ul li {
     float: left;
-    margin-right: 25px;
+    margin-right: 16px;
 }
 
 .header-left ul li a:hover,.header-left ul li.active a {
@@ -274,7 +278,8 @@ transition-duration: .3s;
 
 .header-left #homeLogo {
     float: left;
-    margin-right: 25px;
+    margin-right: 20px;
+    cursor: default;
 }
 
 .header-left #homeLogo>img {
@@ -397,7 +402,7 @@ transition-duration: .3s;
 
 .search-box {
     position: absolute;
-    left: 725px;
+    left: 740px;
 }
 
 .search-box>form {
@@ -405,7 +410,7 @@ transition-duration: .3s;
 }
 
 .search-box>form>input {
-    width: 360px;
+    width: 345px;
     height: 33px;
     padding: 0 10px;
     border: 1px solid #1E90DF;
@@ -432,14 +437,14 @@ transition-duration: .3s;
 #elevator {
     position: fixed;
     display: none;
-    right: 15px;
+    right: 13px;
     bottom: 100px;
     z-index: 10;
     width: 40px;
     height: 40px;
     border-radius: 2px;
     background-color: #444;
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(36, 171, 226, .6);
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     display: -webkit-flex;
@@ -449,7 +454,7 @@ transition-duration: .3s;
 
 #elevator:hover {
     background-color: #4c4c4c;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(36, 171, 226, .7);
 }
 
 #elevator span {
@@ -682,11 +687,14 @@ h1 {
     display: block;
 }
 
-.waterfall-img > span.img-title {
+.waterfall-img>span.img-title {
     display: block;
     font-size: 12px;
     text-align: center;
     padding: 10px 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 #loading {
@@ -694,7 +702,8 @@ h1 {
     margin: 10px auto;
 }
 
-.collect-small,.download-small{
+.collect-small,
+.download-small {
     position: absolute;
     top: 5px;
     width: 30px;
@@ -706,27 +715,31 @@ h1 {
     border: 1px solid rgba(0, 0, 0, .5);
 }
 
-.collect-small{
+.collect-small:hover,
+.download-small:hover {
+    border-color: rgb(36, 171, 226);
+}
+
+.collect-small {
     left: 5px;
 }
 
-
-.download-small{
+.download-small {
     right: 5px;
 }
 
-.collect-small > i{
+.collect-small>i {
     display: block;
     margin: 5px;
     background: url(images/642acb90.icon.png) no-repeat -175px -2px;
-	width: 20px;
-	height: 19px;
+    width: 20px;
+    height: 19px;
 }
 
-.download-small > i{
+.download-small>i {
     display: block;
     margin: 4px 5px;
     background: url(images/642acb90.icon.png) no-repeat -71px -1px;
-	width: 22px;
-	height: 20px;
+    width: 22px;
+    height: 20px;
 }

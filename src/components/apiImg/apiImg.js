@@ -12,11 +12,15 @@ angular.module("apiImg", [])
     .controller("apiImgCtrl", ["$scope", "$http", "$state", "constant", "$stateParams",
         ($scope, $http, $state, constant, $stateParams) => {
             var imgId,
+                time,
                 $box,
+                url,
+                page = 0,
+                start = 0,
                 imgObjNum = 0,
                 boxsLen = 0,
-                minColH,
-                minHIndex,
+                minColH = 0,
+                minHIndex = 0,
                 lastIndex = 0,
                 imgKey = [],
                 $boxs = [],
@@ -25,17 +29,49 @@ angular.module("apiImg", [])
                 imgLeft = [],
                 imgColH = new Array(imgColNum);
             $scope.imgInfo = [];
-            $('#loading').css({'position':'absolute','top':'50%','left':'0'});
-            var item = $stateParams.value;
-            
-            
+            $('#loading').css({
+                'position': 'absolute',
+                'top': '50%',
+                'left': '0'
+            });
+            var Item = $stateParams.value;
             // // console.log(window.location.href);
             // if (location[1] == undefined ) {
-            //     window.location.href = window.location.href + '?item=' + item;
+            //     window.location.href = window.location.href + '?url=' + url;
             // }
 
             for (var y = 0; y < imgColNum; y++) {
                 imgLeft[y] = imgW * y;
+            }
+
+            if (Item == '首页') {
+                $state.go('frame.home', {
+                    reload: false
+                });
+            } else if (Item == '发现') {
+                url = '/api1/favorite/quotes';
+            } else if (Item == '壁纸') {
+                url = '/api2';
+            } else if (Item == '明星') {
+                url = '/api1/favorite/people';
+            } else if (Item == '摄影') {
+                url = '/api1/favorite/photography';
+            } else if (Item == '搞笑') {
+                url = '/api1/favorite/funny';
+            } else if (Item == '家居') {
+                url = '/api1/favorite/home';
+            } else if (Item == '漫画') {
+                url = '/api1/favorite/anime';
+            } else if (Item == 'UI设计') {
+                url = '/api1/favorite/web_app_icon';
+            } else if (Item == '旅行') {
+                url = '/api1/favorite/travel_places';
+            } else if (Item == '造型') {
+                url = '/api1/favorite/modeling_hair';
+            } else if (Item == '美食') {
+                url = '/api1/favorite/food_drink';
+            } else {
+                return;
             }
 
             //显示、隐藏收藏和下载图标
@@ -72,7 +108,7 @@ angular.module("apiImg", [])
             //进行滚动加载
             window.onscroll = function () {
                 if (checkScroll()) {
-                    imgApiHttp(lastIndex, item);
+                    imgApiHttp(lastIndex, Item);
                     $scope.checkRepeat;
                 }
             }
@@ -85,14 +121,14 @@ angular.module("apiImg", [])
                 return (documentH - windowH - scrollTop == 0) ? true : false;
             }
 
-            imgApiHttp(lastIndex, item);
+            imgApiHttp(lastIndex, Item);
             //检测ng-repeat是否已经渲染完毕，如果是再设置瀑布流图片的位置，
             //否则获取图片位置时会出错，因为ng-repeat还没渲染完
             $scope.checkRepeat = function ($last) {
                 if ($last) {
                     $boxs = $('.waterfall-img');
                     boxsLen = $boxs.length;
-                    $('#loading').css('position','');
+                    $('#loading').css('position', '');
                     setPosition(lastIndex);
                     showIcon();
                 }
@@ -128,29 +164,69 @@ angular.module("apiImg", [])
             }
 
             //发送请求，获取图片
-            function imgApiHttp(Index, Item) {
-                $http({
-                    method: "get",
-                    url: '/api1/all',
-                    params: {
-                        'limit': constant.imgNum,
-                        'max': (imgId == undefined) ? '' : imgId
-                    }
-                }).then(function successCallback(response) {
-                    imgId = response.data.pins[constant.imgNum - 1].pin_id; //获取不同图片的标志
-                    for (var a = 0; a < constant.imgNum; a++) {
-                        //向$scope.imgInfo依次添加对象和属性
-                        $scope.imgInfo.push({
-                            'url': '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
-                            'smallUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key + '_fw320',
-                            'title': response.data.pins[a].board.title,
-                            'height': response.data.pins[a].file.height,
-                            'width': response.data.pins[a].file.width
-                        });
-                    }
-                }, function errorCallback() {
+            function imgApiHttp(Index, item) {
+                //请求失败处理
+                function errorCallback() {
                     $('#loading').text('图片加载失败！');
-                });
+                }
+
+                if (item == '发现' || item == 'UI设计' || item == '明星' || item == '搞笑' || item == '摄影' || item == '家居' || item == '漫画' || item == '旅行' || item == '造型' || item == '美食') {
+                    $http({
+                        method: "get",
+                        url: url,
+                        params: {
+                            'limit': constant.imgNum,
+                            'max': (imgId == undefined) ? '' : imgId
+                            // 'page_size': constant.imgNum,
+                            // 'time': (time == undefined) ? '0' : time,
+                            // 'page': page,
+                            // 'start': start,
+                            // 'reqType': 'ajax',
+                            // 'reqFrom': 'result',
+                            // 'query': search
+
+                        }
+                    }).then(function successCallback(response) {
+                        console.log(response.data);
+                        imgId = response.data.pins[constant.imgNum - 1].pin_id; //获取不同图片的标志
+                        for (var a = 0; a < constant.imgNum; a++) {
+                            //向$scope.imgInfo依次添加对象和属性
+                            $scope.imgInfo.push({
+                                'bigUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
+                                'smallUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key + '_fw320',
+                                'title': response.data.pins[a].board.title,
+                                'height': response.data.pins[a].file.height,
+                                'width': response.data.pins[a].file.width
+                            });
+                        }
+                    }, errorCallback);
+                } else if (item == '壁纸') {
+                    $http({
+                        method: "get",
+                        url: url,
+                        params: {
+                            'page_size': constant.imgNum,
+                            'time': (time == undefined) ? '0' : time
+                        }
+                    }).then(function successCallback(response) {
+                        page= page + constant.imgNum;
+                        time = Date.parse(new Date(response.data.data.images[constant.imgNum - 1].pub_time)) / 1000; //获取不同图片的标志
+                        for (var a = 0; a < constant.imgNum; a++) {
+                            //向$scope.imgInfo依次添加对象和属性
+                            $scope.imgInfo.push({
+                                'url': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
+                                'smallUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
+                                'title': response.data.data.images[a].description,
+                                'height': response.data.data.images[a].height,
+                                'width': response.data.data.images[a].width
+                            });
+                        }
+                    }, errorCallback);
+                } else {
+                    return;
+                }
+
+
             }
         }
     ])

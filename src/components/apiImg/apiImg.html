@@ -2,9 +2,9 @@
     <div class="waterfall">
         <div class='waterfall-img' index=1 ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>
             <img ng-src='{{img.smallUrl}}' title='点击查看大图'>
-            <span class='cover-white' ng-click='openImg(img.url)'></span>
+            <span class='cover-white' ng-click='openImg(img.bigUrl)'></span>
             <a class="collect-small" ng-click="collect(img.smallUrl)"><i></i></a>
-            <a class="download-small" ng-href="{{img.url}}" download><i></i></a>
+            <a class="download-small" ng-href="{{img.bigUrl}}" download><i></i></a>
             <span class="img-title">{{img.title}}</span>
         </div>
     </div>

@@ -36,7 +36,7 @@
 
 .header-left ul li {
     float: left;
-    margin-right: 25px;
+    margin-right: 16px;
 }
 
 .header-left ul li a:hover,.header-left ul li.active a {
@@ -45,7 +45,8 @@
 
 .header-left #homeLogo {
     float: left;
-    margin-right: 25px;
+    margin-right: 20px;
+    cursor: default;
 }
 
 .header-left #homeLogo>img {
@@ -168,7 +169,7 @@
 
 .search-box {
     position: absolute;
-    left: 725px;
+    left: 740px;
 }
 
 .search-box>form {
@@ -176,7 +177,7 @@
 }
 
 .search-box>form>input {
-    width: 360px;
+    width: 345px;
     height: 33px;
     padding: 0 10px;
     border: 1px solid #1E90DF;
@@ -203,14 +204,14 @@
 #elevator {
     position: fixed;
     display: none;
-    right: 15px;
+    right: 13px;
     bottom: 100px;
     z-index: 10;
     width: 40px;
     height: 40px;
     border-radius: 2px;
     background-color: #444;
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(36, 171, 226, .6);
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
     display: -webkit-flex;
@@ -220,7 +221,7 @@
 
 #elevator:hover {
     background-color: #4c4c4c;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(36, 171, 226, .7);
 }
 
 #elevator span {

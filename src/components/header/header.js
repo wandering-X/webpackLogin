@@ -53,7 +53,6 @@ angular.module("header", [])
 
             //刷新页面时，保持当前主题专栏tab的高亮状态
             var location = window.location.href.split('=');
-            console.log(encodeURI(location[1]));
             if (location[1] != undefined) {
                 li.each(function () {
                     $(this).removeClass('active');
@@ -68,11 +67,19 @@ angular.module("header", [])
                 li.removeClass('active');
                 $(this).addClass('active');
                 items = $(this).children().text();
-                $state.go('frame.apiImg', {
-                    value: items
-                }, {
-                    reload: false
-                });
+                if (items != '首页') {
+                    $state.go('frame.apiImg', {
+                        value: items
+                    }, {
+                        reload: false
+                    });
+                } else {
+                    $state.go('frame.home', {
+                        value: items
+                    }, {
+                        reload: false
+                    });
+                }
             });
 
             $scope.isLogin = false;

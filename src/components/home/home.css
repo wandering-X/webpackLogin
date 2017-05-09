@@ -163,6 +163,10 @@ transition-duration: .3s;
     margin-right: 0;
 }
 
+.link-care ul > li >a{
+    cursor: default;
+}
+
 .footer-copyRight{
     text-align: center;
     padding: 20px 0;
