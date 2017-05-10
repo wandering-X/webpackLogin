@@ -23,65 +23,13 @@
         <div class="line">
             <span>为您推荐</span>
         </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/01.jpg">
-                <div class="item">热门壁纸</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/02.jpg">
-                <div class="item">高清壁纸</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/03.jpg">
-                <div class="item">美女</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/04.jpg">
-                <div class="item">萌宠</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/05.jpg">
-                <div class="item">动漫</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/06.jpg">
-                <div class="item">小清新</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/07.jpg">
-                <div class="item">创意摄影</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/08.jpg">
-                <div class="item">风景</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/09.jpg">
-                <div class="item">头像</div>
-            </a>
-        </div>
-        <div class="img-box">
-            <a href="#">
-                <img src="../commonStyle/img/10.jpg">
-                <div class="item">明星</div>
-            </a>
+        <div class="img-recommend">
+            <div class="img-box" ng-repeat="recommend in recommends" ng-init="checkRepeat($last)">
+                <a>
+                    <img ng-src="{{recommend.url}}">
+                    <span class="item">{{recommend.title}}</span>
+                </a>
+            </div>
         </div>
     </div>
 

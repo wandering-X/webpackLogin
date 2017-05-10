@@ -15,7 +15,6 @@ angular.module("apiImg", [])
                 time,
                 $box,
                 url,
-                page = 0,
                 start = 0,
                 imgObjNum = 0,
                 boxsLen = 0,
@@ -29,13 +28,14 @@ angular.module("apiImg", [])
                 imgLeft = [],
                 imgColH = new Array(imgColNum);
             $scope.imgInfo = [];
+            $(document).scrollTop('0');
             $('#loading').css({
                 'position': 'absolute',
                 'top': '50%',
                 'left': '0'
             });
-            var Item = $stateParams.value;
-            // // console.log(window.location.href);
+            var Item = $stateParams.item,
+                search = $stateParams.search;
             // if (location[1] == undefined ) {
             //     window.location.href = window.location.href + '?url=' + url;
             // }
@@ -45,6 +45,7 @@ angular.module("apiImg", [])
             }
 
             if (Item == '首页') {
+                console.log('2');
                 $state.go('frame.home', {
                     reload: false
                 });
@@ -71,7 +72,7 @@ angular.module("apiImg", [])
             } else if (Item == '美食') {
                 url = '/api1/favorite/food_drink';
             } else {
-                return;
+                url = '/api3';
             }
 
             //显示、隐藏收藏和下载图标
@@ -177,23 +178,22 @@ angular.module("apiImg", [])
                         params: {
                             'limit': constant.imgNum,
                             'max': (imgId == undefined) ? '' : imgId
-                            // 'page_size': constant.imgNum,
-                            // 'time': (time == undefined) ? '0' : time,
-                            // 'page': page,
-                            // 'start': start,
-                            // 'reqType': 'ajax',
-                            // 'reqFrom': 'result',
-                            // 'query': search
 
                         }
                     }).then(function successCallback(response) {
-                        console.log(response.data);
                         imgId = response.data.pins[constant.imgNum - 1].pin_id; //获取不同图片的标志
                         for (var a = 0; a < constant.imgNum; a++) {
                             //向$scope.imgInfo依次添加对象和属性
+                            var bigUrl = '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
+                                smallUrl = bigUrl + '_fw320';
+                            if (item == '搞笑') {
+                                if (response.data.pins[a].file.height < 400) {
+                                    smallUrl = bigUrl;
+                                }
+                            }
                             $scope.imgInfo.push({
-                                'bigUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
-                                'smallUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key + '_fw320',
+                                'bigUrl': bigUrl,
+                                'smallUrl': smallUrl,
                                 'title': response.data.pins[a].board.title,
                                 'height': response.data.pins[a].file.height,
                                 'width': response.data.pins[a].file.width
@@ -209,12 +209,11 @@ angular.module("apiImg", [])
                             'time': (time == undefined) ? '0' : time
                         }
                     }).then(function successCallback(response) {
-                        page= page + constant.imgNum;
                         time = Date.parse(new Date(response.data.data.images[constant.imgNum - 1].pub_time)) / 1000; //获取不同图片的标志
                         for (var a = 0; a < constant.imgNum; a++) {
                             //向$scope.imgInfo依次添加对象和属性
                             $scope.imgInfo.push({
-                                'url': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
+                                'bigurl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                                 'smallUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                                 'title': response.data.data.images[a].description,
                                 'height': response.data.data.images[a].height,
@@ -223,7 +222,28 @@ angular.module("apiImg", [])
                         }
                     }, errorCallback);
                 } else {
-                    return;
+                    $http({
+                        method: "get",
+                        url: url,
+                        params: {
+                            'start': start,
+                            'reqType': 'ajax',
+                            'reqFrom': 'result',
+                            'query': search
+                        }
+                    }).then(function successCallback(response) {
+                        start = start + constant.imgNum;
+                        for (var a = 0; a < constant.imgNum; a++) {
+                            //向$scope.imgInfo依次添加对象和属性
+                            $scope.imgInfo.push({
+                                'bigurl': response.data.items[a].pic_url_noredirect,
+                                'smallUrl': response.data.items[a].thumbUrl,
+                                'title': response.data.items[a].title,
+                                'height': response.data.items[a].height,
+                                'width': response.data.items[a].width
+                            });
+                        }
+                    }, errorCallback);
                 }
 
 

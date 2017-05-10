@@ -24,7 +24,7 @@ angular.module("app",[
                 template: require("../home/home.html")
             })
             .state("frame.apiImg", {
-                url: "/frame.apiImg?:value",
+                url: "/frame.apiImg?:item:search",
                 template: require("../apiImg/apiImg.html")
             })
             // .state("frame.login", {

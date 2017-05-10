@@ -69,18 +69,40 @@ angular.module("header", [])
                 items = $(this).children().text();
                 if (items != '首页') {
                     $state.go('frame.apiImg', {
-                        value: items
+                        item: items
                     }, {
                         reload: false
                     });
                 } else {
                     $state.go('frame.home', {
-                        value: items
-                    }, {
                         reload: false
                     });
                 }
             });
+
+            //搜索功能
+            $scope.searchImg = function () {
+                if ($scope.search == undefined) {
+                    alert('搜索内容不能为空！');
+                } else {
+                    if (window.location.href.split('=')[0].split('?')[1] != 'search') {
+                        window.location.href = window.location.href.split('=')[0].split('?')[0];
+                    }
+                    li.each(function () {
+                        $(this).removeClass('active');
+                    });
+                    if (window.location.href != location[0].split('?')[0]) {
+                        $state.go('frame.apiImg', {
+                            search: $scope.search
+                        }, {
+                            reload: false
+                        });
+                    } else {
+                        window.location.href = window.location.href + '?search=' + $scope.search;
+                    }
+                }
+
+            }
 
             $scope.isLogin = false;
             $scope.loginName = 'wandering';

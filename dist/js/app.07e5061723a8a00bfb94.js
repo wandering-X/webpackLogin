@@ -4,13 +4,13 @@ webpackJsonp([0],[
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"apiImg-bg\" ng-controller=\"apiImgCtrl\">\r\n    <div class=\"waterfall\">\r\n        <div class='waterfall-img' index=1 ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>\r\n            <img ng-src='{{img.smallUrl}}' title='点击查看大图'>\r\n            <span class='cover-white' ng-click='openImg(img.bigUrl)'></span>\r\n            <a class=\"collect-small\" ng-click=\"collect(img.smallUrl)\"><i></i></a>\r\n            <a class=\"download-small\" ng-href=\"{{img.bigUrl}}\" download><i></i></a>\r\n            <span class=\"img-title\">{{img.title}}</span>\r\n        </div>\r\n    </div>\r\n    <div id=\"loading\">正在加载中...</div>\r\n</div>";
+module.exports = "<div class=\"apiImg-bg\" ng-controller=\"apiImgCtrl\">\r\n    <div class=\"waterfall\">\r\n        <div class='waterfall-img' index=1 ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>\r\n            <img ng-src='{{img.smallUrl}}'>\r\n            <span class='cover-white' ng-click='openImg(img.bigUrl)' title='点击查看大图'></span>\r\n            <a class=\"collect-small\" ng-click=\"collect(img.smallUrl)\"><i></i></a>\r\n            <a class=\"download-small\" ng-href=\"{{img.bigUrl}}\" download><i></i></a>\r\n            <span class=\"img-title\">{{img.title}}</span>\r\n        </div>\r\n    </div>\r\n    <div id=\"loading\">正在加载中...</div>\r\n</div>";
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-module.exports = "<div class=\"home\" ng-controller=\"homeCtrl\">\r\n    <div class=\"banner\">\r\n        <div class=\"swiper-container\">\r\n            <div class=\"swiper-wrapper\">\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg1.jpg\"></div>\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg2.jpg\"></div>\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg3.jpg\"></div>\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg4.jpg\"></div>\r\n            </div>\r\n            <!-- 如果需要分页器 -->\r\n            <div class=\"swiper-pagination\"></div>\r\n            <!-- 如果需要导航按钮 -->\r\n            <div class=\"swiper-button-prev swiper-button-white\"></div>\r\n            <div class=\"swiper-button-next swiper-button-white\"></div>\r\n        </div>\r\n\r\n        <div class=\"title\">\r\n            <span>海量图片，想搜就搜</span>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"img-container\">\r\n        <div class=\"line\">\r\n            <span>为您推荐</span>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(22) + "\">\r\n                <div class=\"item\">热门壁纸</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(23) + "\">\r\n                <div class=\"item\">高清壁纸</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(24) + "\">\r\n                <div class=\"item\">美女</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(25) + "\">\r\n                <div class=\"item\">萌宠</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(26) + "\">\r\n                <div class=\"item\">动漫</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(27) + "\">\r\n                <div class=\"item\">小清新</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(28) + "\">\r\n                <div class=\"item\">创意摄影</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(29) + "\">\r\n                <div class=\"item\">风景</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(30) + "\">\r\n                <div class=\"item\">头像</div>\r\n            </a>\r\n        </div>\r\n        <div class=\"img-box\">\r\n            <a href=\"#\">\r\n                <img src=\"" + __webpack_require__(31) + "\">\r\n                <div class=\"item\">明星</div>\r\n            </a>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"footer\">\r\n        <div class=\"footer-link\">\r\n            <div class=\"link-box link-href\">\r\n                <div class=\"footer-title\">友情链接</div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a href=\"http://huaban.com/\" target=\"_blank\">花瓣网</a></li>\r\n                        <li><a href=\"https://www.duitang.com/\" target=\"_blank\">堆糖网</a></li>\r\n                        <li><a href=\"http://www.58pic.com/\" target=\"_blank\">千图网</a></li>\r\n                    </ul>\r\n                </div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a href=\"http://image.baidu.com/\" target=\"_blank\">百度图片</a></li>\r\n                        <li><a href=\"http://pic.sogou.com/\" target=\"_blank\">搜狗图片</a></li>\r\n                        <li><a href=\"https://720yun.com/u/eab22wzOql6\" target=\"_blank\">720云全景</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n            <div class=\"link-box link-download\">\r\n                <div class=\"footer-title\">移动客户端</div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a href=\"javascript:void(0);\">iPhone版</a></li>\r\n                        <li><a href=\"javascript:void(0);\">Android版</a></li>\r\n                        <li><a href=\"javascript:void(0);\">HD版</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n            <div class=\"link-box link-care\">\r\n                <div class=\"footer-title\">关注我们</div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a>新浪微博：搜图网</a></li>\r\n                        <li><a>官方QQ：312668996</a></li>\r\n                        <li><a>官方微信：18883856708</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n            <div class=\"clearfix\"></div>\r\n        </div>\r\n\r\n        <div class=\"footer-copyRight\">\r\n            <p>&copy;2017&nbsp;searchPicWeb Team</p>\r\n        </div>\r\n    </div>\r\n</div>";
+module.exports = "<div class=\"home\" ng-controller=\"homeCtrl\">\r\n    <div class=\"banner\">\r\n        <div class=\"swiper-container\">\r\n            <div class=\"swiper-wrapper\">\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg1.jpg\"></div>\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg2.jpg\"></div>\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg3.jpg\"></div>\r\n                <div class=\"swiper-slide\"><img src=\"http://119.23.254.64/img/bg4.jpg\"></div>\r\n            </div>\r\n            <!-- 如果需要分页器 -->\r\n            <div class=\"swiper-pagination\"></div>\r\n            <!-- 如果需要导航按钮 -->\r\n            <div class=\"swiper-button-prev swiper-button-white\"></div>\r\n            <div class=\"swiper-button-next swiper-button-white\"></div>\r\n        </div>\r\n\r\n        <div class=\"title\">\r\n            <span>海量图片，想搜就搜</span>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"img-container\">\r\n        <div class=\"line\">\r\n            <span>为您推荐</span>\r\n        </div>\r\n        <div class=\"img-recommend\">\r\n            <div class=\"img-box\" ng-repeat=\"recommend in recommends\" ng-init=\"checkRepeat($last)\">\r\n                <a>\r\n                    <img ng-src=\"{{recommend.url}}\">\r\n                    <span class=\"item\">{{recommend.title}}</span>\r\n                </a>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"footer\">\r\n        <div class=\"footer-link\">\r\n            <div class=\"link-box link-href\">\r\n                <div class=\"footer-title\">友情链接</div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a href=\"http://huaban.com/\" target=\"_blank\">花瓣网</a></li>\r\n                        <li><a href=\"https://www.duitang.com/\" target=\"_blank\">堆糖网</a></li>\r\n                        <li><a href=\"http://www.58pic.com/\" target=\"_blank\">千图网</a></li>\r\n                    </ul>\r\n                </div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a href=\"http://image.baidu.com/\" target=\"_blank\">百度图片</a></li>\r\n                        <li><a href=\"http://pic.sogou.com/\" target=\"_blank\">搜狗图片</a></li>\r\n                        <li><a href=\"https://720yun.com/u/eab22wzOql6\" target=\"_blank\">720云全景</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n            <div class=\"link-box link-download\">\r\n                <div class=\"footer-title\">移动客户端</div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a href=\"javascript:void(0);\">iPhone版</a></li>\r\n                        <li><a href=\"javascript:void(0);\">Android版</a></li>\r\n                        <li><a href=\"javascript:void(0);\">HD版</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n            <div class=\"link-box link-care\">\r\n                <div class=\"footer-title\">关注我们</div>\r\n                <div class=\"link-href-group\">\r\n                    <ul>\r\n                        <li><a>新浪微博：搜图网</a></li>\r\n                        <li><a>官方QQ：312668996</a></li>\r\n                        <li><a>官方微信：18883856708</a></li>\r\n                    </ul>\r\n                </div>\r\n            </div>\r\n            <div class=\"clearfix\"></div>\r\n        </div>\r\n\r\n        <div class=\"footer-copyRight\">\r\n            <p>&copy;2017&nbsp;searchPicWeb Team</p>\r\n        </div>\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 4 */,
@@ -5346,7 +5346,6 @@ angular.module("apiImg", []).directive('apiImg', () => {
         time,
         $box,
         url,
-        page = 0,
         start = 0,
         imgObjNum = 0,
         boxsLen = 0,
@@ -5360,13 +5359,14 @@ angular.module("apiImg", []).directive('apiImg', () => {
         imgLeft = [],
         imgColH = new Array(imgColNum);
     $scope.imgInfo = [];
+    $(document).scrollTop('0');
     $('#loading').css({
         'position': 'absolute',
         'top': '50%',
         'left': '0'
     });
-    var Item = $stateParams.value;
-    // // console.log(window.location.href);
+    var Item = $stateParams.item,
+        search = $stateParams.search;
     // if (location[1] == undefined ) {
     //     window.location.href = window.location.href + '?url=' + url;
     // }
@@ -5376,6 +5376,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
     }
 
     if (Item == '首页') {
+        console.log('2');
         $state.go('frame.home', {
             reload: false
         });
@@ -5402,7 +5403,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
     } else if (Item == '美食') {
         url = '/api1/favorite/food_drink';
     } else {
-        return;
+        url = '/api3';
     }
 
     //显示、隐藏收藏和下载图标
@@ -5508,23 +5509,22 @@ angular.module("apiImg", []).directive('apiImg', () => {
                 params: {
                     'limit': constant.imgNum,
                     'max': imgId == undefined ? '' : imgId
-                    // 'page_size': constant.imgNum,
-                    // 'time': (time == undefined) ? '0' : time,
-                    // 'page': page,
-                    // 'start': start,
-                    // 'reqType': 'ajax',
-                    // 'reqFrom': 'result',
-                    // 'query': search
 
                 }
             }).then(function successCallback(response) {
-                console.log(response.data);
                 imgId = response.data.pins[constant.imgNum - 1].pin_id; //获取不同图片的标志
                 for (var a = 0; a < constant.imgNum; a++) {
                     //向$scope.imgInfo依次添加对象和属性
+                    var bigUrl = '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
+                        smallUrl = bigUrl + '_fw320';
+                    if (item == '搞笑') {
+                        if (response.data.pins[a].file.height < 400) {
+                            smallUrl = bigUrl;
+                        }
+                    }
                     $scope.imgInfo.push({
-                        'bigUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
-                        'smallUrl': '//img.hb.aicdn.com/' + response.data.pins[a].file.key + '_fw320',
+                        'bigUrl': bigUrl,
+                        'smallUrl': smallUrl,
                         'title': response.data.pins[a].board.title,
                         'height': response.data.pins[a].file.height,
                         'width': response.data.pins[a].file.width
@@ -5540,12 +5540,11 @@ angular.module("apiImg", []).directive('apiImg', () => {
                     'time': time == undefined ? '0' : time
                 }
             }).then(function successCallback(response) {
-                page = page + constant.imgNum;
                 time = Date.parse(new Date(response.data.data.images[constant.imgNum - 1].pub_time)) / 1000; //获取不同图片的标志
                 for (var a = 0; a < constant.imgNum; a++) {
                     //向$scope.imgInfo依次添加对象和属性
                     $scope.imgInfo.push({
-                        'url': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
+                        'bigurl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                         'smallUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                         'title': response.data.data.images[a].description,
                         'height': response.data.data.images[a].height,
@@ -5554,7 +5553,28 @@ angular.module("apiImg", []).directive('apiImg', () => {
                 }
             }, errorCallback);
         } else {
-            return;
+            $http({
+                method: "get",
+                url: url,
+                params: {
+                    'start': start,
+                    'reqType': 'ajax',
+                    'reqFrom': 'result',
+                    'query': search
+                }
+            }).then(function successCallback(response) {
+                start = start + constant.imgNum;
+                for (var a = 0; a < constant.imgNum; a++) {
+                    //向$scope.imgInfo依次添加对象和属性
+                    $scope.imgInfo.push({
+                        'bigurl': response.data.items[a].pic_url_noredirect,
+                        'smallUrl': response.data.items[a].thumbUrl,
+                        'title': response.data.items[a].title,
+                        'height': response.data.items[a].height,
+                        'width': response.data.items[a].width
+                    });
+                }
+            }, errorCallback);
         }
     }
 }]);
@@ -5569,25 +5589,6 @@ angular.module("constant", []).factory("constant", [function ($scope) {
     } else {
         localStorage.islogin = false;
     }
-
-    if (localStorage.accountId) {
-        localStorage.accountId = getAccountId();
-    } else {
-        localStorage.accountId = "";
-    }
-
-    if (localStorage.accessToken) {
-        localStorage.accessToken = getAccessToken();
-    } else {
-        localStorage.accessToken = "";
-    }
-
-    if (localStorage.mobile) {
-        localStorage.mobile = getMobile();
-    } else {
-        localStorage.mobile = "";
-    }
-
     function setLogin(login) {
         localStorage.islogin = login;
     }
@@ -5597,80 +5598,23 @@ angular.module("constant", []).factory("constant", [function ($scope) {
         return islogin;
     }
 
-    function setAccessToken(accessToken) {
-        localStorage.accessToken = accessToken;
-    }
-
-    function getAccessToken() {
-        return localStorage.accessToken;
-    }
-
-    function setAccountId(accountId) {
-        localStorage.accountId = accountId;
-    }
-
-    function getAccountId() {
-        return localStorage.accountId;
-    }
-
-    function setMobile(mobile) {
-        localStorage.mobile = mobile;
-    }
-
-    function getMobile() {
-        return localStorage.mobile;
-    }
-
     return {
         setLogin: setLogin,
         isLogin: getLogin,
-        successCode: "00000000",
         imgNum: 40,
-        header: {
-            contentType: "application/x-www-form-urlencoded",
-            timestamp: "1492075692799",
-            appKey: "559CEAE328FB0AF78DAC25F7303FEB8DA1BE4463",
-            appId: "09250100010000"
-        },
 
         userInfo: {
-            setAccessToken: setAccessToken,
-            setAccountId: setAccountId,
-            accessToken: getAccessToken,
-            setMobile: setMobile,
             loginName: '',
-            accountId: getAccountId,
-            mobile: getMobile,
-            password: "",
-            authCode: '',
-            locationCode: '河北省'
+            password: ""
         },
         validMsg: {
             mobile: "手机号不正确！",
             password: "密码不能少于6位！",
-            newPassword: "密码输入不一致！",
-            codeBtn: "获取短信验证码"
+            newPassword: "密码输入不一致！"
         },
         validType: {
             mobile: new RegExp("^1[34578]\\d{9}$"),
             password: new RegExp("^\\S{6,20}$")
-        },
-        appInfo: {
-            appId: "09250100010000",
-            timestamp: '1492075692799',
-            appKey: '559CEAE328FB0AF78DAC25F7303FEB8DA1BE4463'
-        },
-        ajaxUrl: {
-            login: 'http://192.168.150.181/hswy-basic-web/basic/oauth2/clientLogin',
-            sendMsg: 'http://192.168.150.181/hswy-basic-web/basic/account/verificate/send',
-            userInfo: 'http://192.168.150.181/hswy-basic-web/basic/account/information',
-            verifyCode: 'http://192.168.150.181/hswy-basic-web/basic/account/verificate/verify',
-            findLogin: 'http://192.168.150.181/hswy-basic-web/basic/account/password/retrieve',
-            register: 'http://192.168.150.181/hswy-basic-web/basic/account/register',
-            isRegister: 'http://192.168.150.181/hswy-basic-web/basic/account/existed',
-            reset: 'http://192.168.150.181/hswy-basic-web/basic/account/password/reset',
-            huaban: 'http://img.hb.aicdn.com/',
-            findApi: 'http://api.huaban.com/'
         }
     };
 }]);
@@ -5689,12 +5633,12 @@ angular.module("app", ["ui.router", "angularSpinner", "constant", "login",
 
     $stateProvider.state("frame", {
         url: "/frame",
-        template: __webpack_require__(34)
+        template: __webpack_require__(24)
     }).state("frame.home", {
         url: "/frame.home",
         template: __webpack_require__(3)
     }).state("frame.apiImg", {
-        url: "/frame.apiImg?:value",
+        url: "/frame.apiImg?:item:search",
         template: __webpack_require__(2)
     });
     // .state("frame.login", {
@@ -5727,7 +5671,7 @@ __webpack_require__(19);
 
 angular.module("header", []).directive('header', () => {
     return {
-        template: __webpack_require__(35),
+        template: __webpack_require__(25),
         replace: false,
         restrict: "E",
         scope: {}
@@ -5791,18 +5735,41 @@ angular.module("header", []).directive('header', () => {
         items = $(this).children().text();
         if (items != '首页') {
             $state.go('frame.apiImg', {
-                value: items
+                item: items
             }, {
                 reload: false
             });
         } else {
             $state.go('frame.home', {
-                value: items
-            }, {
                 reload: false
             });
         }
     });
+
+    //搜索功能
+    $scope.searchImg = function () {
+        if ($scope.search == undefined) {
+            $state.go('frame.home', {
+                reload: true
+            });
+        } else {
+            if (window.location.href.split('=')[0].split('?')[1] != 'search') {
+                window.location.href = window.location.href.split('=')[0].split('?')[0];
+            }
+            li.each(function () {
+                $(this).removeClass('active');
+            });
+            if (window.location.href != location[0].split('?')[0]) {
+                $state.go('frame.apiImg', {
+                    search: $scope.search
+                }, {
+                    reload: false
+                });
+            } else {
+                window.location.href = window.location.href + '?search=' + $scope.search;
+            }
+        }
+    };
 
     $scope.isLogin = false;
     $scope.loginName = 'wandering';
@@ -5824,7 +5791,9 @@ angular.module("home", []).directive('home', () => {
         restrict: "E",
         scope: {}
     };
-}).controller("homeCtrl", ["$scope", "$http", "$state", "constant", ($scope, $http, $state, constant) => {
+}).controller("homeCtrl", ["$scope", "$state", "constant", "$http", ($scope, $state, constant, $http) => {
+    $(document).scrollTop('0');
+    //轮播图
     var mySwiper = new Swiper('.swiper-container', {
         autoplay: 5000,
         speed: 1000,
@@ -5838,6 +5807,29 @@ angular.module("home", []).directive('home', () => {
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev'
     });
+
+    $http({
+        method: 'get',
+        url: '/api4' + 'getHotSearchList.php'
+    }).then(function successCallback(response) {
+        $scope.recommends = response.data.data;
+    });
+
+    $scope.checkRepeat = function ($last) {
+        if ($last) {
+            $('.img-box').click(function () {
+                console.log('1');
+                var search = $(this).find('a>.item').text();
+                console.log(search);
+                var url = $state.href('frame.apiImg', {
+                    search: search
+                }, {
+                    reload: true
+                });
+                window.open(url, '_blank');
+            });
+        }
+    };
 }]);
 
 /***/ }),
@@ -5848,7 +5840,7 @@ __webpack_require__(21);
 
 angular.module("login", []).directive('login', () => {
     return {
-        template: __webpack_require__(36),
+        template: __webpack_require__(26),
         replace: true,
         restrict: "E",
         scope: {}
@@ -6806,88 +6798,28 @@ __webpack_require__(8);
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/b5607cf4.01.jpg";
+module.exports = __webpack_require__.p + "images/642acb90.icon.png";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/0038d60e.02.jpg";
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/b93ba5eb.03.jpg";
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/d2d03146.04.jpg";
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/b6730ec0.05.jpg";
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/a6d03d2e.06.jpg";
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/58e1fa0a.07.jpg";
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/c3390d3f.08.jpg";
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/db076094.09.jpg";
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/678dec7c.10.jpg";
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/642acb90.icon.png";
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
 module.exports = __webpack_require__.p + "images/40e3f468.logo.png";
 
 /***/ }),
-/* 34 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = "<header></header>\r\n<div ui-view=\"\"></div>";
 
 /***/ }),
-/* 35 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div ng-controller=\"headerCtrl\">\r\n    <div class=\"header-container\">\r\n        <div class=\"header\">\r\n            <div class=\"header-left\">\r\n                <a id=\"homeLogo\">\r\n                    <img src=\"" + __webpack_require__(33) + "\" alt=\"搜图网\">\r\n                    <span>搜图网</span>\r\n                </a>\r\n                <ul>\r\n                    <li class=\"active\"><a>首页</a></li>\r\n                    <li class=\"\"><a>发现</a></li>\r\n                    <li class=\"\"><a>壁纸</a></li>\r\n                    <li class=\"\"><a>明星</a></li>\r\n                    <li class=\"\"><a>搞笑</a></li>\r\n                    <li class=\"\"><a>摄影</a></li>\r\n                    <li class=\"\"><a>家居</a></li>\r\n                    <li class=\"\"><a>漫画</a></li>\r\n                    <li class=\"\"><a>旅行</a></li>\r\n                    <li class=\"\"><a>造型</a></li>\r\n                    <li class=\"\"><a>美食</a></li>\r\n                    <li class=\"\"><a>UI设计</a></li>\r\n                </ul>\r\n            </div>\r\n\r\n            <div class=\"header-right\">\r\n                <div class=\"right-div register-div\">\r\n                    <a class=\"right-btn register-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openRegister()\">注册</a>\r\n                </div>\r\n\r\n                <div class=\"right-div login-div\" ng-mouseover=\"showInfo()\" ng-mouseleave=\"hideInfo()\">\r\n                    <a class=\"header-loginName\" ng-show=\"isLogin\">{{loginName}}<i></i></a>\r\n                    <a class=\"right-btn login-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openLogin()\">登录</a>\r\n                    <div class=\"loginInfo\" ng-if=\"isLogin\" ng-show=\"isShowInfo\">\r\n                        <i class=\"callout\"></i>\r\n                        <ul>\r\n                            <li><a>个人中心</a></li>\r\n                            <li><a>账户设置</a></li>\r\n                            <li><a>退出</a></li>\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"search-box\">\r\n                <form>\r\n                    <input type=\"text\" placeholder=\"搜素你喜欢的图片\">\r\n                    <a href=\"\"><img src=\"" + __webpack_require__(32) + "\"></a>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div ng-if=\"isShowLoginIframe\" class=\"black-overlay\">\r\n        <div class=\"login-box\" ng-if=\"isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>登录</h1>\r\n            <form method=\"post\">\r\n                <input type=\"text\" name=\"username\" class=\"input\" placeholder=\"用户名\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">登录</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openRegister()\">注册</a>\r\n                <span>&#124</span>\r\n                <a href=\"\">忘记密码？</a>\r\n            </div>\r\n            <p>{{errorMsg}}</p>\r\n        </div>\r\n\r\n        <div class=\"login-box\" ng-if=\"!isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>注册</h1>\r\n            <form method=\"post\">\r\n                <input type=\"password\" class=\"input-off\">\r\n                <input type=\"text\" name=\"username\" class=\"input\" placeholder=\"用户名\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input\" placeholder=\"确认密码\" ng-model=\"confirmPassword\" ng-change=\"isDisabled()\"required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">注册</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openLogin()\">登录</a>\r\n            </div>\r\n            <p>{{errorMsg}}</p>\r\n        </div>\r\n    </div>\r\n\r\n    <a id=\"elevator\" ng-click=\"gotoTop()\" title=\"回到顶部\"><span></span></a>\r\n</div>";
+module.exports = "<div ng-controller=\"headerCtrl\">\r\n    <div class=\"header-container\">\r\n        <div class=\"header\">\r\n            <div class=\"header-left\">\r\n                <a id=\"homeLogo\">\r\n                    <img src=\"" + __webpack_require__(23) + "\" alt=\"搜图网\">\r\n                    <span>搜图网</span>\r\n                </a>\r\n                <ul>\r\n                    <li class=\"active\"><a>首页</a></li>\r\n                    <li class=\"\"><a>发现</a></li>\r\n                    <li class=\"\"><a>壁纸</a></li>\r\n                    <li class=\"\"><a>明星</a></li>\r\n                    <li class=\"\"><a>搞笑</a></li>\r\n                    <li class=\"\"><a>摄影</a></li>\r\n                    <li class=\"\"><a>家居</a></li>\r\n                    <li class=\"\"><a>漫画</a></li>\r\n                    <li class=\"\"><a>旅行</a></li>\r\n                    <li class=\"\"><a>造型</a></li>\r\n                    <li class=\"\"><a>美食</a></li>\r\n                    <li class=\"\"><a>UI设计</a></li>\r\n                </ul>\r\n            </div>\r\n\r\n            <div class=\"header-right\">\r\n                <div class=\"right-div register-div\">\r\n                    <a class=\"right-btn register-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openRegister()\">注册</a>\r\n                </div>\r\n\r\n                <div class=\"right-div login-div\" ng-mouseover=\"showInfo()\" ng-mouseleave=\"hideInfo()\">\r\n                    <a class=\"header-loginName\" ng-show=\"isLogin\">{{loginName}}<i></i></a>\r\n                    <a class=\"right-btn login-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openLogin()\">登录</a>\r\n                    <div class=\"loginInfo\" ng-if=\"isLogin\" ng-show=\"isShowInfo\">\r\n                        <i class=\"callout\"></i>\r\n                        <ul>\r\n                            <li><a>个人中心</a></li>\r\n                            <li><a>账户设置</a></li>\r\n                            <li><a>退出</a></li>\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"search-box\">\r\n                <form>\r\n                    <input type=\"text\" placeholder=\"搜素你喜欢的图片\" ng-model=\"search\">\r\n                    <a href=\"\" ng-click=\"searchImg()\"><img src=\"" + __webpack_require__(22) + "\"></a>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div ng-if=\"isShowLoginIframe\" class=\"black-overlay\">\r\n        <div class=\"login-box\" ng-if=\"isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>登录</h1>\r\n            <form method=\"post\">\r\n                <input type=\"text\" name=\"username\" class=\"input\" placeholder=\"用户名\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">登录</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openRegister()\">注册</a>\r\n                <span>&#124</span>\r\n                <a href=\"\">忘记密码？</a>\r\n            </div>\r\n            <p>{{errorMsg}}</p>\r\n        </div>\r\n\r\n        <div class=\"login-box\" ng-if=\"!isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>注册</h1>\r\n            <form method=\"post\">\r\n                <input type=\"password\" class=\"input-off\">\r\n                <input type=\"text\" name=\"username\" class=\"input\" placeholder=\"用户名\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input\" placeholder=\"确认密码\" ng-model=\"confirmPassword\" ng-change=\"isDisabled()\"required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">注册</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openLogin()\">登录</a>\r\n            </div>\r\n            <p>{{errorMsg}}</p>\r\n        </div>\r\n    </div>\r\n\r\n    <a id=\"elevator\" ng-click=\"gotoTop()\" title=\"回到顶部\"><span></span></a>\r\n</div>";
 
 /***/ }),
-/* 36 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"page-container\">\r\n    <div class=\"login-box\" ng-controller=\"loginCtrl\">\r\n        <h1>登录</h1>\r\n        <form method=\"post\">\r\n            <input type=\"text\" name=\"username\" class=\"username\" placeholder=\"手机号\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n            <input type=\"password\" name=\"password\" class=\"password\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n            <div class=\"login-btn\">\r\n                <button type=\"submit\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">登录</button>\r\n                <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n            </div>\r\n        </form>\r\n        <div class=\"forgetpsd\">\r\n            <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openRegister()\">注册</a>\r\n            <span>&#124</span>\r\n            <a href=\"javascript:void(0);\" ng-click=\"openLoginFind()\">忘记密码？</a>\r\n        </div>\r\n        <p>{{errorMsg}}</p>\r\n    </div>\r\n</div>";

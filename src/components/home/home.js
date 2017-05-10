@@ -12,8 +12,10 @@ angular.module("home", [])
             scope: {}
         }
     })
-    .controller("homeCtrl", ["$scope", "$http", "$state", "constant",
-        ($scope, $http, $state, constant) => {
+    .controller("homeCtrl", ["$scope", "$state", "constant", "$http",
+        ($scope, $state, constant, $http) => {
+            $(document).scrollTop('0');
+            //轮播图
             var mySwiper = new Swiper('.swiper-container', {
                 autoplay: 5000,
                 speed: 1000,
@@ -27,5 +29,30 @@ angular.module("home", [])
                 nextButton: '.swiper-button-next',
                 prevButton: '.swiper-button-prev'
             })
+
+            $http({
+                method: 'get',
+                url: '/api4' + 'getHotSearchList.php'
+            }).then(function successCallback(response) {
+                $scope.recommends = response.data.data;
+
+            });
+
+            $scope.checkRepeat = function ($last) {
+                if ($last) {
+                    $('.img-box').click(function () {
+                        console.log('1');
+                        var search = $(this).find('a>.item').text();
+                        console.log(search);
+                        var url = $state.href('frame.apiImg', {
+                            search: search
+                        }, {
+                            reload: true
+                        });
+                        window.open(url, '_blank');
+                    });
+                }
+            }
+
         }
     ])
