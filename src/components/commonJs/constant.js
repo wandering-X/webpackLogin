@@ -19,11 +19,16 @@ angular.module("constant", [])
             setLogin: setLogin,
             isLogin: getLogin,
             imgNum: 40,
-
             userInfo: {
                 loginName: '',
                 password: ""
             },
+            imgCollect: [{
+                isCollect: false,
+                imgUrl: '',
+                width: 0,
+                height: 0
+            }],
             validMsg: {
                 mobile: "手机号不正确！",
                 password: "密码不能少于6位！",

@@ -12,6 +12,7 @@ require('./components/login/login.js')
 require('./components/home/home.js')
 require('./components/header/header.js')
 require('./components/apiImg/apiImg.js')
+require('./components/userInfo/userInfo.js')
 
 require('./components/config/config')
 require('./components/commonJs/constant')

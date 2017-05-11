@@ -13,7 +13,6 @@ angular.module("header", [])
         ($scope, $state, constant) => {
             var items;
             var li = $('.header-left>ul>li');
-
             //回到顶部
             $('#elevator').hide();
             $scope.gotoTop = function () {
@@ -43,20 +42,20 @@ angular.module("header", [])
             }
 
             $scope.openRegister = function () {
-                $scope.isShowLoginIframe = true;
+               $scope.isShowLoginIframe = true;
                 $scope.isShowLogin = false;
             }
 
             $scope.closeLogin = function () {
-                $scope.isShowLoginIframe = false;
+             $scope.isShowLoginIframe = false;
             }
 
             //刷新页面时，保持当前主题专栏tab的高亮状态
             var location = window.location.href.split('=');
-            if (location[1] != undefined) {
+            if (window.location.href.split('=')[0].split('?')[1] == 'item') {
                 li.each(function () {
                     $(this).removeClass('active');
-                    if (encodeURI($(this).children().text()) == location[1]) {
+                    if (encodeURI($(this).children().text()) == window.location.href.split('=')[1].split('&')[0]) {
                         $(this).addClass('active');
                     }
                 });
@@ -103,8 +102,8 @@ angular.module("header", [])
                 }
 
             }
-
-            $scope.isLogin = false;
+            constant.setLogin(true);
+            $scope.isLogin = constant.isLogin();
             $scope.loginName = 'wandering';
         }
     ])

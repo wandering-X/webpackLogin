@@ -41,13 +41,12 @@ angular.module("home", [])
             $scope.checkRepeat = function ($last) {
                 if ($last) {
                     $('.img-box').click(function () {
-                        console.log('1');
                         var search = $(this).find('a>.item').text();
                         console.log(search);
                         var url = $state.href('frame.apiImg', {
                             search: search
                         }, {
-                            reload: true
+                            reload: false
                         });
                         window.open(url, '_blank');
                     });

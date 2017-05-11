@@ -9,8 +9,8 @@ angular.module("apiImg", [])
             scope: {}
         }
     })
-    .controller("apiImgCtrl", ["$scope", "$http", "$state", "constant", "$stateParams",
-        ($scope, $http, $state, constant, $stateParams) => {
+    .controller("apiImgCtrl", ["$scope", "$http", "$state", "constant", "$stateParams", "$timeout",
+        ($scope, $http, $state, constant, $stateParams, $timeout) => {
             var imgId,
                 time,
                 $box,
@@ -36,16 +36,12 @@ angular.module("apiImg", [])
             });
             var Item = $stateParams.item,
                 search = $stateParams.search;
-            // if (location[1] == undefined ) {
-            //     window.location.href = window.location.href + '?url=' + url;
-            // }
 
             for (var y = 0; y < imgColNum; y++) {
                 imgLeft[y] = imgW * y;
             }
 
             if (Item == '首页') {
-                console.log('2');
                 $state.go('frame.home', {
                     reload: false
                 });
@@ -104,6 +100,38 @@ angular.module("apiImg", [])
                     $(this).parent().find('.collect-small').show();
                     $(this).show();
                 });
+
+                //收藏功能
+                $scope.collect = function (url) {
+                    if (!constant.isLogin()) {
+                        $scope.imgTips = '请先登录，开启收藏功能！';
+                        $('#img-tips').css('margin-left', '-166px');
+                        $scope.isShowTips = true;
+                        $timeout(function () {
+                            $scope.isShowTips = false;
+                        }, 3000);
+                    } else {
+
+                    }
+                };
+            }
+
+            //查看大图
+            function openBigImg() {
+                $scope.openImg = function (url, height) {
+                    $scope.bigUrl = url;
+                    if (height < 400) {
+                        $scope.isShowBigImg2 = true;
+                        $scope.isShowBigImg1 = false;
+                    } else {
+                        $scope.isShowBigImg1 = true;
+                        $scope.isShowBigImg2 = false;
+                    }
+                }
+                $scope.closeImg = function () {
+                    $scope.isShowBigImg1 = false;
+                    $scope.isShowBigImg2 = false;
+                }
             }
 
             //进行滚动加载
@@ -132,6 +160,7 @@ angular.module("apiImg", [])
                     $('#loading').css('position', '');
                     setPosition(lastIndex);
                     showIcon();
+                    openBigImg();
                 }
             }
 
@@ -187,7 +216,7 @@ angular.module("apiImg", [])
                             var bigUrl = '//img.hb.aicdn.com/' + response.data.pins[a].file.key,
                                 smallUrl = bigUrl + '_fw320';
                             if (item == '搞笑') {
-                                if (response.data.pins[a].file.height < 400) {
+                                if (response.data.pins[a].file.height < 450) {
                                     smallUrl = bigUrl;
                                 }
                             }
@@ -213,7 +242,7 @@ angular.module("apiImg", [])
                         for (var a = 0; a < constant.imgNum; a++) {
                             //向$scope.imgInfo依次添加对象和属性
                             $scope.imgInfo.push({
-                                'bigurl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
+                                'bigUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                                 'smallUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                                 'title': response.data.data.images[a].description,
                                 'height': response.data.data.images[a].height,
@@ -236,7 +265,7 @@ angular.module("apiImg", [])
                         for (var a = 0; a < constant.imgNum; a++) {
                             //向$scope.imgInfo依次添加对象和属性
                             $scope.imgInfo.push({
-                                'bigurl': response.data.items[a].pic_url_noredirect,
+                                'bigUrl': response.data.items[a].thumbUrl,
                                 'smallUrl': response.data.items[a].thumbUrl,
                                 'title': response.data.items[a].title,
                                 'height': response.data.items[a].height,

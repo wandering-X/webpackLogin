@@ -126,7 +126,7 @@
     top: 33px;
     left: 50%;
     margin-left: -58px;
-    font-size: 13px;
+    font-size: 15px;
     background-color: #fff;
     border: 1px solid #E3E3E3;
     box-shadow: 1px 1px 5px #d1d1d1;
@@ -141,7 +141,7 @@
 
 .loginInfo>ul>li {
     width: 75px;
-    padding: 5px 10px;
+    padding: 7px 12px;
     cursor: pointer;
 }
 
@@ -237,7 +237,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, .6);
     z-index: 99;
 }
 

@@ -2,14 +2,15 @@ angular.module("app",[
     "ui.router",
     "angularSpinner",
     "constant",
-    "login",
+    // "login",
     // "loginInfo",
     // "loginFind",
     // "register",
     // "reset",
     "home",
     "header",
-    "apiImg"
+    "apiImg",
+    "userInfo"
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.when("", "/frame/frame.home");
@@ -26,6 +27,10 @@ angular.module("app",[
             .state("frame.apiImg", {
                 url: "/frame.apiImg?:item:search",
                 template: require("../apiImg/apiImg.html")
+            })
+            .state("frame.userInfo", {
+                url: "/frame.userInfo",
+                template: require("../userInfo/userInfo.html")
             })
             // .state("frame.login", {
             //     url: "/frame.login",
