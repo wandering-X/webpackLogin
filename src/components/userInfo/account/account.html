@@ -1,0 +1,17 @@
+<div class="account-container">
+    <h2>修改密码</h2>
+    <div class="account-box">
+        <form method="post">
+            <input type="password" class="input-off">
+            <input type="text" name="username" class="input userName" placeholder="用户名" value="{{userName}}" disabled="disabled">
+            <input type="password" name="password" class="input password" placeholder="原密码" ng-model="loginpsd" ng-change="isDisabled()" required>
+            <input type="password" name="password" class="input newPassword" placeholder="新密码" ng-model="loginNewpsd" ng-change="isDisabled()" required>
+            <input type="password" name="password" class="input confirmNewPassword" placeholder="确认新密码" ng-model="confirmNewPsd" ng-change="isDisabled()" required>
+            <div class="login-button">
+                <button type="submit" class="button" ng-click="userChange()" ng-class="{'true':'disabled','false':''}[disabled]" ng-disabled="disabled">确定</button>
+                <span us-spinner spinner-theme="white" spinner-on="showSpinner"></span>
+            </div>
+        </form>
+        <p>{{errorMsg}}</p>
+    </div>
+</div>

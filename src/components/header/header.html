@@ -33,9 +33,9 @@
                     <div class="loginInfo" ng-if="isLogin" ng-show="isShowInfo">
                         <i class="callout"></i>
                         <ul>
-                            <li><a>个人中心</a></li>
-                            <li><a>账户设置</a></li>
-                            <li><a>退出</a></li>
+                            <li><a ng-click="openPersonal()">个人中心</a></li>
+                            <li><a ng-click="openAccount()">账户设置</a></li>
+                            <li><a ng-click="quit()">退出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -55,8 +55,9 @@
             <a class="closeLogin" ng-click="closeLogin()"><i></i></a>
             <h1>登录</h1>
             <form method="post">
-                <input type="text" name="username" class="input" placeholder="用户名" ng-model="loginname" ng-change="isDisabled()" required>
-                <input type="password" name="password" class="input" placeholder="密码" ng-model="loginpsd" ng-change="isDisabled()" required>
+                <input type="password" class="input-off">
+                <input type="text" name="username" class="input userName" placeholder="用户名" ng-model="loginname" ng-change="isDisabled()" required>
+                <input type="password" name="password" class="input userPsd" placeholder="密码" ng-model="loginpsd" ng-change="isDisabled()" required>
                 <div class="login-button">
                     <button type="submit" class="button" ng-click="userLogin()" ng-class="{'true':'disabled','false':''}[disabled]" ng-disabled="disabled">登录</button>
                     <span us-spinner spinner-theme="white" spinner-on="showSpinner"></span>
@@ -75,18 +76,18 @@
             <h1>注册</h1>
             <form method="post">
                 <input type="password" class="input-off">
-                <input type="text" name="username" class="input" placeholder="用户名" ng-model="loginname" ng-change="isDisabled()" required>
-                <input type="password" name="password" class="input" placeholder="密码" ng-model="loginpsd" ng-change="isDisabled()" required>
-                <input type="password" name="password" class="input" placeholder="确认密码" ng-model="confirmPassword" ng-change="isDisabled()"required>
+                <input type="text" name="username" class="input userName1" placeholder="用户名" ng-model="loginName" ng-change="isDisabled1()" required>
+                <input type="password" name="password" class="input userPsd1" placeholder="密码" ng-model="loginPsd" ng-change="isDisabled1()" required>
+                <input type="password" name="password" class="input confirmUserPsd" placeholder="确认密码" ng-model="confirmPassword" ng-change="isDisabled1()"required>
                 <div class="login-button">
-                    <button type="submit" class="button" ng-click="userLogin()" ng-class="{'true':'disabled','false':''}[disabled]" ng-disabled="disabled">注册</button>
-                    <span us-spinner spinner-theme="white" spinner-on="showSpinner"></span>
+                    <button type="submit" class="button" ng-click="userRegister()" ng-class="{'true':'disabled','false':''}[disabled1]" ng-disabled="disabled1">注册</button>
+                    <span us-spinner spinner-theme="white" spinner-on="showSpinner1"></span>
                 </div>
             </form>
             <div class="forgetpsd">
                 <a href="javascript:void(0);" class="register-link" ng-click="openLogin()">登录</a>
             </div>
-            <p>{{errorMsg}}</p>
+            <p>{{codeErrorMsg}}</p>
         </div>
     </div>
 

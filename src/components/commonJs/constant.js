@@ -1,10 +1,12 @@
 angular.module("constant", [])
     .factory("constant", [function ($scope) {
+        //本地存储用户师傅铺登录
         if (localStorage.islogin) {
             localStorage.islogin = getLogin();
         } else {
             localStorage.islogin = false;
         }
+
         function setLogin(login) {
             localStorage.islogin = login;
         }
@@ -15,12 +17,28 @@ angular.module("constant", [])
             return islogin;
         }
 
+        //本地存储用户名
+        if (localStorage.loginName) {
+            localStorage.loginName = getLoginName();
+        } else {
+            localStorage.loginName = "";
+        }
+
+        function setLoginName(loginName) {
+            localStorage.loginName = loginName;
+        }
+
+        function getLoginName() {
+            return localStorage.loginName;
+        }
+
         return {
             setLogin: setLogin,
             isLogin: getLogin,
             imgNum: 40,
             userInfo: {
-                loginName: '',
+                setLoginName: setLoginName,
+                loginName: getLoginName,
                 password: ""
             },
             imgCollect: [{
@@ -35,7 +53,6 @@ angular.module("constant", [])
                 newPassword: "密码输入不一致！"
             },
             validType: {
-                mobile: new RegExp("^1[34578]\\d{9}$"),
                 password: new RegExp("^\\S{6,20}$")
             },
         }

@@ -32,6 +32,14 @@ angular.module("app",[
                 url: "/frame.userInfo",
                 template: require("../userInfo/userInfo.html")
             })
+            .state("frame.userInfo.personal", {
+                url: "/frame.userInfo.personal",
+                template: require("../userInfo/personal/personal.html")
+            })
+            .state("frame.userInfo.account", {
+                url: "/frame.userInfo.account",
+                template: require("../userInfo/account/account.html")
+            })
             // .state("frame.login", {
             //     url: "/frame.login",
             //     template:require("../login/login.html")                          

@@ -102,18 +102,38 @@ angular.module("apiImg", [])
                 });
 
                 //收藏功能
-                $scope.collect = function (url) {
+                $scope.collect = function (imgUrl) {
                     if (!constant.isLogin()) {
                         $scope.imgTips = '请先登录，开启收藏功能！';
-                        $('#img-tips').css('margin-left', '-166px');
+                        $('.img-tips').css('margin-left', '-166px');
                         $scope.isShowTips = true;
                         $timeout(function () {
                             $scope.isShowTips = false;
-                        }, 3000);
+                        }, 2000);
                     } else {
-
+                        collectImg(imgUrl);
                     }
                 };
+            }
+
+            function collectImg(imgUrl) {
+                $http({
+                    method: "POST",
+                    url: '/api4/collectImg.php',
+                    params: {
+                        'userName': constant.userInfo.loginName(),
+                        'url': imgUrl
+                    }
+                }).then(function successCallback(response) {
+                    if (response.data.code == 200) {
+                        $scope.imgTips = '收藏成功！';
+                        $('.img-tips').css('margin-left', '-60px');
+                        $scope.isShowTips = true;
+                        $timeout(function () {
+                            $scope.isShowTips = false;
+                        }, 2000);
+                    }
+                });
             }
 
             //查看大图
@@ -169,7 +189,6 @@ angular.module("apiImg", [])
                 for (var j = Index; j < boxsLen; j++) {
                     $box = $boxs.eq(j);
                     var $img = $box.find('img');
-                    $box.attr('index', j);
                     $scope.imgInfo[j].height = (imgW - 15) / $scope.imgInfo[j].width * $scope.imgInfo[j].height;
                     $img.css('height', $scope.imgInfo[j].height + 'px');
                     $('.cover-white').eq(j).css('height', $scope.imgInfo[j].height + 'px');

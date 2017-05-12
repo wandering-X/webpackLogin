@@ -1,3 +1,7 @@
-<div ng-controller="userInfoCtrl">
-    
+<div ng-controller="userInfoCtrl" class="userInfo">
+    <div class="userInfoTab">
+        <a ui-sref-active="active" ui-sref=".personal"><i></i>个人中心</a>
+        <a ui-sref-active="active" ui-sref=".account"><i></i>账户设置</a>
+    </div>
+    <div ui-view="" class="userInfoPage"></div>
 </div>

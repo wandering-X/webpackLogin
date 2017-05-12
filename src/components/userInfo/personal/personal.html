@@ -1,0 +1,14 @@
+<div class="personal-container">
+    <h2>我的收藏</h2>
+    <div class="personal-box">
+        <div style="padding-top:20px;" ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>
+            <div class='waterfall-img'>
+            <img ng-src='{{img.url}}'>
+            <span class='cover-white'></span>
+            <a class="collect-small" ng-click="cancelCollect(img.url)"><i></i></a>
+            <a class="download-small" ng-href="{{img.url}}" download><i></i></a>
+        </div>
+        </div>
+    </div>
+    <div class="img-tips" ng-show="isShowTips">{{imgTips}}</div>
+</div>
