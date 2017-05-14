@@ -102,7 +102,7 @@ angular.module("apiImg", [])
                 });
 
                 //收藏功能
-                $scope.collect = function (imgUrl) {
+                $scope.collect = function (imgUrl,bigUrl,width,height) {
                     if (!constant.isLogin()) {
                         $scope.imgTips = '请先登录，开启收藏功能！';
                         $('.img-tips').css('margin-left', '-166px');
@@ -111,18 +111,21 @@ angular.module("apiImg", [])
                             $scope.isShowTips = false;
                         }, 2000);
                     } else {
-                        collectImg(imgUrl);
+                        collectImg(imgUrl,bigUrl,width,height);
                     }
                 };
             }
 
-            function collectImg(imgUrl) {
+            function collectImg(imgUrl,bigUrl,width,height) {
                 $http({
                     method: "POST",
                     url: '/api4/collectImg.php',
                     params: {
                         'userName': constant.userInfo.loginName(),
-                        'url': imgUrl
+                        'url': imgUrl,
+                        'largeUrl': bigUrl,
+                        'width': width,
+                        'height': height
                     }
                 }).then(function successCallback(response) {
                     if (response.data.code == 200) {
@@ -243,6 +246,7 @@ angular.module("apiImg", [])
                                 'bigUrl': bigUrl,
                                 'smallUrl': smallUrl,
                                 'title': response.data.pins[a].board.title,
+                                'Height': response.data.pins[a].file.height,
                                 'height': response.data.pins[a].file.height,
                                 'width': response.data.pins[a].file.width
                             });
@@ -264,6 +268,7 @@ angular.module("apiImg", [])
                                 'bigUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                                 'smallUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                                 'title': response.data.data.images[a].description,
+                                'Height': response.data.data.images[a].height,
                                 'height': response.data.data.images[a].height,
                                 'width': response.data.data.images[a].width
                             });
@@ -287,6 +292,7 @@ angular.module("apiImg", [])
                                 'bigUrl': response.data.items[a].thumbUrl,
                                 'smallUrl': response.data.items[a].thumbUrl,
                                 'title': response.data.items[a].title,
+                                'Height': response.data.items[a].height,
                                 'height': response.data.items[a].height,
                                 'width': response.data.items[a].width
                             });

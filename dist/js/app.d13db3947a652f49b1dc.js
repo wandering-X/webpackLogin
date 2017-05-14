@@ -4,7 +4,7 @@ webpackJsonp([0],[
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"apiImg-bg\" ng-controller=\"apiImgCtrl\">\r\n    <div class=\"waterfall\">\r\n        <div class='waterfall-img' index=1 ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>\r\n            <img ng-src='{{img.smallUrl}}'>\r\n            <span class='cover-white' ng-click='openImg(img.bigUrl,img.height)' title='点击查看大图'></span>\r\n            <a class=\"collect-small\" ng-click=\"collect(img.smallUrl)\"><i></i></a>\r\n            <a class=\"download-small\" ng-href=\"{{img.bigUrl}}\" download><i></i></a>\r\n            <span class=\"img-title\">{{img.title}}</span>\r\n        </div>\r\n    </div>\r\n    <div id=\"loading\">正在加载中...</div>\r\n    <div class=\"img-tips\" ng-show=\"isShowTips\">{{imgTips}}</div>\r\n    <div class=\"black-overlay\" ng-if=\"isShowBigImg1\">\r\n        <img class=\"bigImg\" ng-src=\"{{bigUrl}}\">\r\n        <span class=\"closeImg\" ng-click=\"closeImg()\"><i></i></span>\r\n    </div>\r\n    <div class=\"black-overlay Black-overlay\" ng-if=\"isShowBigImg2\">\r\n        <img class=\"bigImg\" ng-src=\"{{bigUrl}}\">\r\n        <span class=\"closeImg\" ng-click=\"closeImg()\"><i></i></span>\r\n    </div>\r\n</div>";
+module.exports = "<div class=\"apiImg-bg\" ng-controller=\"apiImgCtrl\">\r\n    <div class=\"waterfall\">\r\n        <div class='waterfall-img' ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>\r\n            <img ng-src='{{img.smallUrl}}'>\r\n            <span class='cover-white' ng-click='openImg(img.bigUrl,img.height)' title='点击查看大图'></span>\r\n            <a class=\"collect-small\" ng-click=\"collect(img.smallUrl,img.bigUrl,img.width,img.Height)\"><i></i></a>\r\n            <a class=\"download-small\" ng-href=\"{{img.bigUrl}}\" download><i></i></a>\r\n            <span class=\"img-title\">{{img.title}}</span>\r\n        </div>\r\n    </div>\r\n    <div id=\"loading\">正在加载中...</div>\r\n    <div class=\"img-tips\" ng-show=\"isShowTips\">{{imgTips}}</div>\r\n    <div class=\"black-overlay\" ng-if=\"isShowBigImg1\">\r\n        <img class=\"bigImg\" ng-src=\"{{bigUrl}}\">\r\n        <span class=\"closeImg\" ng-click=\"closeImg()\"><i></i></span>\r\n    </div>\r\n    <div class=\"black-overlay Black-overlay\" ng-if=\"isShowBigImg2\">\r\n        <img class=\"bigImg\" ng-src=\"{{bigUrl}}\">\r\n        <span class=\"closeImg\" ng-click=\"closeImg()\"><i></i></span>\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 3 */
@@ -16,7 +16,7 @@ module.exports = "<div class=\"home\" ng-controller=\"homeCtrl\">\r\n    <div cl
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = "<div ng-controller=\"userInfoCtrl\" class=\"userInfo\">\r\n    <div class=\"userInfoTab\">\r\n        <a ui-sref-active=\"active\" ui-sref=\".personal\"><i></i>个人中心</a>\r\n        <a ui-sref-active=\"active\" ui-sref=\".account\"><i></i>账户设置</a>\r\n    </div>\r\n    <div ui-view=\"\" class=\"userInfoPage\"></div>\r\n</div>";
+module.exports = "<div ng-controller=\"userInfoCtrl\" class=\"userInfo\">\r\n    <div class=\"userInfoTab\">\r\n        <a ui-sref-active=\"active\" ui-sref=\".personal\" ng-click=\"getPersonal()\"><i></i>个人中心</a>\r\n        <a ui-sref-active=\"active\" ui-sref=\".account\"><i></i>账户设置</a>\r\n    </div>\r\n    <div ui-view=\"\" class=\"userInfoPage\"></div>\r\n</div>";
 
 /***/ }),
 /* 5 */,
@@ -5439,7 +5439,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
         });
 
         //收藏功能
-        $scope.collect = function (imgUrl) {
+        $scope.collect = function (imgUrl, bigUrl, width, height) {
             if (!constant.isLogin()) {
                 $scope.imgTips = '请先登录，开启收藏功能！';
                 $('.img-tips').css('margin-left', '-166px');
@@ -5448,18 +5448,21 @@ angular.module("apiImg", []).directive('apiImg', () => {
                     $scope.isShowTips = false;
                 }, 2000);
             } else {
-                collectImg(imgUrl);
+                collectImg(imgUrl, bigUrl, width, height);
             }
         };
     }
 
-    function collectImg(imgUrl) {
+    function collectImg(imgUrl, bigUrl, width, height) {
         $http({
             method: "POST",
             url: '/api4/collectImg.php',
             params: {
                 'userName': constant.userInfo.loginName(),
-                'url': imgUrl
+                'url': imgUrl,
+                'largeUrl': bigUrl,
+                'width': width,
+                'height': height
             }
         }).then(function successCallback(response) {
             if (response.data.code == 200) {
@@ -5580,6 +5583,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
                         'bigUrl': bigUrl,
                         'smallUrl': smallUrl,
                         'title': response.data.pins[a].board.title,
+                        'Height': response.data.pins[a].file.height,
                         'height': response.data.pins[a].file.height,
                         'width': response.data.pins[a].file.width
                     });
@@ -5601,6 +5605,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
                         'bigUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                         'smallUrl': '//wpstatic.zuimeia.com/' + response.data.data.images[a].image_url,
                         'title': response.data.data.images[a].description,
+                        'Height': response.data.data.images[a].height,
                         'height': response.data.data.images[a].height,
                         'width': response.data.data.images[a].width
                     });
@@ -5624,6 +5629,7 @@ angular.module("apiImg", []).directive('apiImg', () => {
                         'bigUrl': response.data.items[a].thumbUrl,
                         'smallUrl': response.data.items[a].thumbUrl,
                         'title': response.data.items[a].title,
+                        'Height': response.data.items[a].height,
                         'height': response.data.items[a].height,
                         'width': response.data.items[a].width
                     });
@@ -5699,18 +5705,12 @@ angular.module("constant", []).factory("constant", [function ($scope) {
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-angular.module("app", ["ui.router", "angularSpinner", "constant",
-// "login",
-// "loginInfo",
-// "loginFind",
-// "register",
-// "reset",
-"home", "header", "apiImg", "userInfo"]).config(function ($stateProvider, $urlRouterProvider) {
+angular.module("app", ["ui.router", "angularSpinner", "constant", "home", "header", "apiImg", "userInfo"]).config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.when("", "/frame/frame.home");
 
     $stateProvider.state("frame", {
         url: "/frame",
-        template: __webpack_require__(27)
+        template: __webpack_require__(26)
     }).state("frame.home", {
         url: "/frame.home",
         template: __webpack_require__(3)
@@ -5722,31 +5722,11 @@ angular.module("app", ["ui.router", "angularSpinner", "constant",
         template: __webpack_require__(4)
     }).state("frame.userInfo.personal", {
         url: "/frame.userInfo.personal",
-        template: __webpack_require__(31)
+        template: __webpack_require__(29)
     }).state("frame.userInfo.account", {
         url: "/frame.userInfo.account",
-        template: __webpack_require__(30)
+        template: __webpack_require__(28)
     });
-    // .state("frame.login", {
-    //     url: "/frame.login",
-    //     template:require("../login/login.html")                          
-    // })
-    // .state("frame.loginFind", {
-    //     url: "/frame.loginFind",
-    //     template: require("../login_find/login_find.html")
-    // })
-    // .state("frame.loginInfo", {
-    //     url: "/frame.loginInfo",
-    //     template: require("../login_info/login_info.html")
-    // })
-    // .state("frame.register", {
-    //     url: "/frame.register",
-    //     template: require("../register/register.html")
-    // })
-    // .state("frame.reset", {
-    //     url: "/frame.reset",
-    //     template: require("../reset/reset.html")
-    // })
 });
 
 /***/ }),
@@ -5757,7 +5737,7 @@ __webpack_require__(21);
 
 angular.module("header", []).directive('header', () => {
     return {
-        template: __webpack_require__(28),
+        template: __webpack_require__(27),
         replace: false,
         restrict: "E",
         scope: {}
@@ -6060,102 +6040,6 @@ angular.module("home", []).directive('home', () => {
 
 __webpack_require__(23);
 
-angular.module("login", []).directive('login', () => {
-    return {
-        template: __webpack_require__(29),
-        replace: true,
-        restrict: "E",
-        scope: {}
-    };
-}).config(['usSpinnerConfigProvider', function (usSpinnerConfigProvider) {
-    usSpinnerConfigProvider.setTheme('white', {
-        radius: 6,
-        width: 2,
-        length: 5,
-        color: '#fff',
-        position: 'absolute',
-        top: '47px',
-        left: '195px'
-    });
-}]).controller("loginCtrl", ["$scope", "$http", "$state", "usSpinnerService", "constant", ($scope, $http, $state, usSpinnerService, constant) => {
-    $scope.showSpinner = false; //loading加载
-
-    //登录按钮是否可用
-    function testDisabled() {
-        if ($scope.loginname && $scope.loginpsd) {
-            $scope.disabled = false;
-        } else {
-            $scope.disabled = true;
-        }
-    }
-
-    testDisabled();
-
-    $scope.isDisabled = () => {
-        testDisabled();
-    };
-
-    //请求服务端前，先进行表单验证
-    $scope.userLogin = () => {
-        if (!constant.validType.mobile.test($scope.loginname)) {
-            $scope.errorMsg = constant.validMsg.mobile;
-        } else if (!constant.validType.password.test($scope.loginpsd)) {
-            $scope.errorMsg = constant.validMsg.password;
-        } else {
-            $scope.showSpinner = true;
-            loginHttp();
-        }
-    };
-
-    //打开找回密码
-    $scope.openLoginFind = () => {
-        $state.go("frame.loginFind", {
-            reload: false
-        });
-    };
-
-    //打开注册页面
-    $scope.openRegister = () => {
-        $state.go("frame.register", {
-            reload: false
-        });
-    };
-
-    //POST请求服务端
-    function loginHttp() {
-        $http({
-            method: "POST",
-            url: constant.ajaxUrl.login,
-            headers: {
-                "Content-Type": constant.header.contentType
-            },
-            params: {
-                'loginName': $scope.loginname,
-                'password': $scope.loginpsd,
-                'appId': constant.appInfo.appId
-            }
-        }).then(function successCallback(response) {
-            $scope.showSpinner = false;
-            $scope.errorMsg = response.data.head.msg;
-            if (response.data.head.code == constant.successCode) {
-                constant.userInfo.setAccountId(response.data.body.accountInfo.accountId);
-                constant.userInfo.setAccessToken(response.data.body.accessToken);
-                constant.setLogin(true);
-
-                $state.go("frame.loginInfo", { reload: false });
-            }
-        }, function errorCallback(response) {
-            console.log(response.data.head.msg);
-        });
-    }
-}]);
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(24);
-
 angular.module("userInfo", []).directive('userInfo', () => {
     return {
         template: __webpack_require__(4),
@@ -6164,6 +6048,193 @@ angular.module("userInfo", []).directive('userInfo', () => {
         scope: {}
     };
 }).controller("userInfoCtrl", ["$scope", "$state", "constant", "$http", "$timeout", ($scope, $state, constant, $http, $timeout) => {
+    getPersonalInfo();
+
+    function getPersonalInfo() {
+        var $box,
+            imgObjNum = 0,
+            boxsLen = 0,
+            minColH = 0,
+            minHIndex = 0,
+            maxColH = 0,
+            maxHIndex = 0,
+            $boxs = [],
+            imgW = 251,
+            imgColNum = 3,
+            imgLeft = [],
+            imgColH = new Array(imgColNum);
+        $scope.imgInfo = [];
+
+        getCollectImg();
+
+        for (var y = 0; y < imgColNum; y++) {
+            imgLeft[y] = imgW * y;
+        }
+
+        //显示、隐藏收藏和下载图标
+        function showIcon() {
+            $('.cover-white').hover(function () {
+                $(this).parent().find('.collect-small').show();
+                $(this).parent().find('.download-small').show();
+            }, function () {
+                $(this).parent().find('.collect-small').hide();
+                $(this).parent().find('.download-small').hide();
+            });
+            $('.download-small').hover(function () {
+                $(this).find('i').css('background-position', '-106px -1px');
+            }, function () {
+                $(this).find('i').css('background-position', '-71px -1px');
+            });
+            $('.collect-small').mousemove(function () {
+                $(this).parent().find('.download-small').show();
+                $(this).show();
+            });
+            $('.download-small').mousemove(function () {
+                $(this).find('i').css('background-position', '-106px -1px');
+                $(this).parent().find('.collect-small').show();
+                $(this).show();
+            });
+
+            //取消收藏功能
+            $scope.cancelCollect = function (imgUrl) {
+                cancelCollectImg(imgUrl);
+                $scope.checkRepeat = function ($last) {
+                    if ($last) {
+                        $('#loading').hide();
+                        $boxs = $('.waterfall-img');
+                        boxsLen = $boxs.length;
+                        setPosition();
+                        showIcon();
+                        openBigImg();
+                    }
+                };
+            };
+        }
+
+        function openBigImg() {
+            $scope.openImg = function (url, height) {
+                $scope.bigUrl = url;
+                if (height < 400) {
+                    $scope.isShowBigImg2 = true;
+                    $scope.isShowBigImg1 = false;
+                } else {
+                    $scope.isShowBigImg1 = true;
+                    $scope.isShowBigImg2 = false;
+                }
+            };
+            $scope.closeImg = function () {
+                $scope.isShowBigImg1 = false;
+                $scope.isShowBigImg2 = false;
+            };
+        }
+
+        $scope.checkRepeat = function ($last) {
+            if ($last) {
+                $('#loading').hide();
+                $boxs = $('.waterfall-img');
+                boxsLen = $boxs.length;
+                setPosition();
+                showIcon();
+                openBigImg();
+            }
+        };
+
+        function setPosition() {
+            for (var j = 0; j < boxsLen; j++) {
+                $box = $boxs.eq(j);
+                var $img = $box.find('img');
+                $scope.imgInfo[j].height = (imgW - 15) / $scope.imgInfo[j].width * $scope.imgInfo[j].height;
+                $img.css('height', $scope.imgInfo[j].height + 'px');
+                $('.cover-white').eq(j).css('height', $scope.imgInfo[j].height + 'px');
+                if (j < imgColNum) {
+                    $box.css({
+                        'left': imgLeft[j % imgColNum] + 'px',
+                        'top': '0px'
+                    });
+                    imgColH[j] = $box.height();
+                } else {
+                    minColH = Math.min.apply(null, imgColH);
+                    minHIndex = $.inArray(minColH, imgColH);
+                    $box.css({
+                        'left': imgLeft[minHIndex % imgColNum] + 'px',
+                        'top': minColH + 15 + 'px'
+                    });
+                    imgColH[minHIndex] = $box.height() + $box.position().top;
+                    console.log(imgColH);
+                }
+            }
+            maxColH = Math.max.apply(null, imgColH);
+            console.log(imgColH);
+            $('.waterfall').css('height', maxColH + 'px');
+            $('.personal-container').css('height', maxColH + 90 + 'px');
+        }
+
+        function cancelCollectImg(imgUrl) {
+            $http({
+                method: "POST",
+                url: '/api4/cancelCollectImg.php',
+                params: {
+                    'userName': constant.userInfo.loginName(),
+                    'url': imgUrl
+                }
+            }).then(function successCallback(response) {
+                if (response.data.code == 200) {
+                    $scope.imgTips = '取消收藏成功！';
+                    $('.img-tips').css('margin-left', '-75px');
+                    $scope.isShowTips = true;
+                    $timeout(function () {
+                        $scope.isShowTips = false;
+                    }, 2000);
+                    var $box,
+                        imgObjNum = 0,
+                        boxsLen = 0,
+                        minColH = 0,
+                        minHIndex = 0,
+                        maxColH = 0,
+                        maxHIndex = 0,
+                        $boxs = [],
+                        imgW = 251,
+                        imgColNum = 3,
+                        imgLeft = [],
+                        imgColH = new Array(imgColNum);
+                    $scope.imgInfo = [];
+
+                    getCollectImg();
+
+                    for (var y = 0; y < imgColNum; y++) {
+                        imgLeft[y] = imgW * y;
+                    }
+                }
+            });
+        }
+
+        function getCollectImg() {
+            $('#loading').show();
+            $http({
+                method: "POST",
+                url: '/api4/getCollectImgList.php',
+                params: {
+                    'userName': constant.userInfo.loginName()
+                }
+            }).then(function successCallback(response) {
+                if (response.data.code == 200) {
+                    boxsLen = response.data.size;
+                    for (var a = 0; a < boxsLen; a++) {
+                        $scope.imgInfo.push({
+                            'largeUrl': response.data.imgUrls[a].largeUrl,
+                            'url': response.data.imgUrls[a].url,
+                            'height': response.data.imgUrls[a].height,
+                            'width': response.data.imgUrls[a].width
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    $scope.getPersonal = function () {
+        getPersonalInfo();
+    };
     //确定按钮是否可用
     function testDisabled() {
         if ($('.userName').val() && $('.password').val() && $('.newPassword').val() && $('.confirmNewPassword').val()) {
@@ -6216,80 +6287,13 @@ angular.module("userInfo", []).directive('userInfo', () => {
             console.log(response.data.status);
         });
     }
-
-    getCollectImg();
-    //显示、隐藏收藏和下载图标
-    function showIcon() {
-        $('.cover-white').hover(function () {
-            $(this).parent().find('.collect-small').show();
-            $(this).parent().find('.download-small').show();
-        }, function () {
-            $(this).parent().find('.collect-small').hide();
-            $(this).parent().find('.download-small').hide();
-        });
-        $('.download-small').hover(function () {
-            $(this).find('i').css('background-position', '-106px -1px');
-        }, function () {
-            $(this).find('i').css('background-position', '-71px -1px');
-        });
-        $('.collect-small').mousemove(function () {
-            $(this).parent().find('.download-small').show();
-            $(this).show();
-        });
-        $('.download-small').mousemove(function () {
-            $(this).find('i').css('background-position', '-106px -1px');
-            $(this).parent().find('.collect-small').show();
-            $(this).show();
-        });
-
-        //取消收藏功能
-        $scope.cancelCollect = function (imgUrl) {
-            cancelCollectImg(imgUrl);
-        };
-    }
-
-    $scope.checkRepeat = function ($last) {
-        if ($last) {
-            showIcon();
-        }
-    };
-
-    function cancelCollectImg(imgUrl) {
-        $http({
-            method: "POST",
-            url: '/api4/cancelCollectImg.php',
-            params: {
-                'userName': constant.userInfo.loginName(),
-                'url': imgUrl
-            }
-        }).then(function successCallback(response) {
-            if (response.data.code == 200) {
-                $scope.imgTips = '取消收藏成功！';
-                $('.img-tips').css('margin-left', '-75px');
-                $scope.isShowTips = true;
-                $timeout(function () {
-                    $scope.isShowTips = false;
-                    getCollectImg();
-                }, 2000);
-            }
-        });
-    }
-
-    function getCollectImg() {
-        $http({
-            method: "POST",
-            url: '/api4/getCollectImgList.php',
-            params: {
-                'userName': constant.userInfo.loginName()
-            }
-        }).then(function successCallback(response) {
-            if (response.data.code == 200) {
-                $scope.imgInfo = response.data.imgUrls;
-                showIcon();
-            }
-        });
-    }
 }]);
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 15 */,
@@ -7108,21 +7112,17 @@ angular.module("userInfo", []).directive('userInfo', () => {
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(14);
 
 __webpack_require__(0);
 __webpack_require__(7);
 __webpack_require__(6);
 __webpack_require__(1);
 
-__webpack_require__(13);
-// require('./components/login_info/login_info.js')
-// require('./components/login_find/login_find.js')
-// require('./components/register/register.js')
-// require('./components/reset/reset.js')
 __webpack_require__(12);
 __webpack_require__(11);
 __webpack_require__(8);
-__webpack_require__(14);
+__webpack_require__(13);
 
 __webpack_require__(10);
 __webpack_require__(9);
@@ -7160,51 +7160,39 @@ __webpack_require__(9);
 
 /***/ }),
 /* 24 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/f52ccbc6.icon.png";
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/40e3f468.logo.png";
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = "<header></header>\r\n<div ui-view=\"\"></div>";
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div ng-controller=\"headerCtrl\">\r\n    <div class=\"header-container\">\r\n        <div class=\"header\">\r\n            <div class=\"header-left\">\r\n                <a id=\"homeLogo\">\r\n                    <img src=\"" + __webpack_require__(26) + "\" alt=\"搜图网\">\r\n                    <span>搜图网</span>\r\n                </a>\r\n                <ul>\r\n                    <li class=\"active\"><a>首页</a></li>\r\n                    <li class=\"\"><a>发现</a></li>\r\n                    <li class=\"\"><a>壁纸</a></li>\r\n                    <li class=\"\"><a>明星</a></li>\r\n                    <li class=\"\"><a>搞笑</a></li>\r\n                    <li class=\"\"><a>摄影</a></li>\r\n                    <li class=\"\"><a>家居</a></li>\r\n                    <li class=\"\"><a>漫画</a></li>\r\n                    <li class=\"\"><a>旅行</a></li>\r\n                    <li class=\"\"><a>造型</a></li>\r\n                    <li class=\"\"><a>美食</a></li>\r\n                    <li class=\"\"><a>UI设计</a></li>\r\n                </ul>\r\n            </div>\r\n\r\n            <div class=\"header-right\">\r\n                <div class=\"right-div register-div\">\r\n                    <a class=\"right-btn register-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openRegister()\">注册</a>\r\n                </div>\r\n\r\n                <div class=\"right-div login-div\" ng-mouseover=\"showInfo()\" ng-mouseleave=\"hideInfo()\">\r\n                    <a class=\"header-loginName\" ng-show=\"isLogin\">{{loginName}}<i></i></a>\r\n                    <a class=\"right-btn login-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openLogin()\">登录</a>\r\n                    <div class=\"loginInfo\" ng-if=\"isLogin\" ng-show=\"isShowInfo\">\r\n                        <i class=\"callout\"></i>\r\n                        <ul>\r\n                            <li><a ng-click=\"openPersonal()\">个人中心</a></li>\r\n                            <li><a ng-click=\"openAccount()\">账户设置</a></li>\r\n                            <li><a ng-click=\"quit()\">退出</a></li>\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"search-box\">\r\n                <form>\r\n                    <input type=\"text\" placeholder=\"搜素你喜欢的图片\" ng-model=\"search\">\r\n                    <a href=\"\" ng-click=\"searchImg()\"><img src=\"" + __webpack_require__(25) + "\"></a>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div ng-if=\"isShowLoginIframe\" class=\"black-overlay\">\r\n        <div class=\"login-box\" ng-if=\"isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>登录</h1>\r\n            <form method=\"post\">\r\n                <input type=\"password\" class=\"input-off\">\r\n                <input type=\"text\" name=\"username\" class=\"input userName\" placeholder=\"用户名\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input userPsd\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">登录</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openRegister()\">注册</a>\r\n                <span>&#124</span>\r\n                <a href=\"\">忘记密码？</a>\r\n            </div>\r\n            <p>{{errorMsg}}</p>\r\n        </div>\r\n\r\n        <div class=\"login-box\" ng-if=\"!isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>注册</h1>\r\n            <form method=\"post\">\r\n                <input type=\"password\" class=\"input-off\">\r\n                <input type=\"text\" name=\"username\" class=\"input userName1\" placeholder=\"用户名\" ng-model=\"loginName\" ng-change=\"isDisabled1()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input userPsd1\" placeholder=\"密码\" ng-model=\"loginPsd\" ng-change=\"isDisabled1()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input confirmUserPsd\" placeholder=\"确认密码\" ng-model=\"confirmPassword\" ng-change=\"isDisabled1()\"required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userRegister()\" ng-class=\"{'true':'disabled','false':''}[disabled1]\" ng-disabled=\"disabled1\">注册</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner1\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openLogin()\">登录</a>\r\n            </div>\r\n            <p>{{codeErrorMsg}}</p>\r\n        </div>\r\n    </div>\r\n\r\n    <a id=\"elevator\" ng-click=\"gotoTop()\" title=\"回到顶部\"><span></span></a>\r\n</div>";
+module.exports = "<div ng-controller=\"headerCtrl\">\r\n    <div class=\"header-container\">\r\n        <div class=\"header\">\r\n            <div class=\"header-left\">\r\n                <a id=\"homeLogo\">\r\n                    <img src=\"" + __webpack_require__(25) + "\" alt=\"搜图网\">\r\n                    <span>搜图网</span>\r\n                </a>\r\n                <ul>\r\n                    <li class=\"active\"><a>首页</a></li>\r\n                    <li class=\"\"><a>发现</a></li>\r\n                    <li class=\"\"><a>壁纸</a></li>\r\n                    <li class=\"\"><a>明星</a></li>\r\n                    <li class=\"\"><a>搞笑</a></li>\r\n                    <li class=\"\"><a>摄影</a></li>\r\n                    <li class=\"\"><a>家居</a></li>\r\n                    <li class=\"\"><a>漫画</a></li>\r\n                    <li class=\"\"><a>旅行</a></li>\r\n                    <li class=\"\"><a>造型</a></li>\r\n                    <li class=\"\"><a>美食</a></li>\r\n                    <li class=\"\"><a>UI设计</a></li>\r\n                </ul>\r\n            </div>\r\n\r\n            <div class=\"header-right\">\r\n                <div class=\"right-div register-div\">\r\n                    <a class=\"right-btn register-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openRegister()\">注册</a>\r\n                </div>\r\n\r\n                <div class=\"right-div login-div\" ng-mouseover=\"showInfo()\" ng-mouseleave=\"hideInfo()\">\r\n                    <a class=\"header-loginName\" ng-show=\"isLogin\">{{loginName}}<i></i></a>\r\n                    <a class=\"right-btn login-btn\" href=\"javascript:void(0);\" ng-show=\"!isLogin\" ng-click=\"openLogin()\">登录</a>\r\n                    <div class=\"loginInfo\" ng-if=\"isLogin\" ng-show=\"isShowInfo\">\r\n                        <i class=\"callout\"></i>\r\n                        <ul>\r\n                            <li><a ng-click=\"openPersonal()\">个人中心</a></li>\r\n                            <li><a ng-click=\"openAccount()\">账户设置</a></li>\r\n                            <li><a ng-click=\"quit()\">退出</a></li>\r\n                        </ul>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"search-box\">\r\n                <form>\r\n                    <input type=\"text\" placeholder=\"搜素你喜欢的图片\" ng-model=\"search\">\r\n                    <a href=\"\" ng-click=\"searchImg()\"><img src=\"" + __webpack_require__(24) + "\"></a>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n    <div ng-if=\"isShowLoginIframe\" class=\"black-overlay\">\r\n        <div class=\"login-box\" ng-if=\"isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>登录</h1>\r\n            <form method=\"post\">\r\n                <input type=\"password\" class=\"input-off\">\r\n                <input type=\"text\" name=\"username\" class=\"input userName\" placeholder=\"用户名\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input userPsd\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">登录</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openRegister()\">注册</a>\r\n                <span>&#124</span>\r\n                <a href=\"\">忘记密码？</a>\r\n            </div>\r\n            <p>{{errorMsg}}</p>\r\n        </div>\r\n\r\n        <div class=\"login-box\" ng-if=\"!isShowLogin\">\r\n            <a class=\"closeLogin\" ng-click=\"closeLogin()\"><i></i></a>\r\n            <h1>注册</h1>\r\n            <form method=\"post\">\r\n                <input type=\"password\" class=\"input-off\">\r\n                <input type=\"text\" name=\"username\" class=\"input userName1\" placeholder=\"用户名\" ng-model=\"loginName\" ng-change=\"isDisabled1()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input userPsd1\" placeholder=\"密码\" ng-model=\"loginPsd\" ng-change=\"isDisabled1()\" required>\r\n                <input type=\"password\" name=\"password\" class=\"input confirmUserPsd\" placeholder=\"确认密码\" ng-model=\"confirmPassword\" ng-change=\"isDisabled1()\"required>\r\n                <div class=\"login-button\">\r\n                    <button type=\"submit\" class=\"button\" ng-click=\"userRegister()\" ng-class=\"{'true':'disabled','false':''}[disabled1]\" ng-disabled=\"disabled1\">注册</button>\r\n                    <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner1\"></span>\r\n                </div>\r\n            </form>\r\n            <div class=\"forgetpsd\">\r\n                <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openLogin()\">登录</a>\r\n            </div>\r\n            <p>{{codeErrorMsg}}</p>\r\n        </div>\r\n    </div>\r\n\r\n    <a id=\"elevator\" ng-click=\"gotoTop()\" title=\"回到顶部\"><span></span></a>\r\n</div>";
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"page-container\">\r\n    <div class=\"login-box\" ng-controller=\"loginCtrl\">\r\n        <h1>登录</h1>\r\n        <form method=\"post\">\r\n            <input type=\"text\" name=\"username\" class=\"username\" placeholder=\"手机号\" ng-model=\"loginname\" ng-change=\"isDisabled()\" required>\r\n            <input type=\"password\" name=\"password\" class=\"password\" placeholder=\"密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n            <div class=\"login-btn\">\r\n                <button type=\"submit\" ng-click=\"userLogin()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">登录</button>\r\n                <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n            </div>\r\n        </form>\r\n        <div class=\"forgetpsd\">\r\n            <a href=\"javascript:void(0);\" class=\"register-link\" ng-click=\"openRegister()\">注册</a>\r\n            <span>&#124</span>\r\n            <a href=\"javascript:void(0);\" ng-click=\"openLoginFind()\">忘记密码？</a>\r\n        </div>\r\n        <p>{{errorMsg}}</p>\r\n    </div>\r\n</div>";
-
-/***/ }),
-/* 30 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"account-container\">\r\n    <h2>修改密码</h2>\r\n    <div class=\"account-box\">\r\n        <form method=\"post\">\r\n            <input type=\"password\" class=\"input-off\">\r\n            <input type=\"text\" name=\"username\" class=\"input userName\" placeholder=\"用户名\" value=\"{{userName}}\" disabled=\"disabled\">\r\n            <input type=\"password\" name=\"password\" class=\"input password\" placeholder=\"原密码\" ng-model=\"loginpsd\" ng-change=\"isDisabled()\" required>\r\n            <input type=\"password\" name=\"password\" class=\"input newPassword\" placeholder=\"新密码\" ng-model=\"loginNewpsd\" ng-change=\"isDisabled()\" required>\r\n            <input type=\"password\" name=\"password\" class=\"input confirmNewPassword\" placeholder=\"确认新密码\" ng-model=\"confirmNewPsd\" ng-change=\"isDisabled()\" required>\r\n            <div class=\"login-button\">\r\n                <button type=\"submit\" class=\"button\" ng-click=\"userChange()\" ng-class=\"{'true':'disabled','false':''}[disabled]\" ng-disabled=\"disabled\">确定</button>\r\n                <span us-spinner spinner-theme=\"white\" spinner-on=\"showSpinner\"></span>\r\n            </div>\r\n        </form>\r\n        <p>{{errorMsg}}</p>\r\n    </div>\r\n</div>";
 
 /***/ }),
-/* 31 */
+/* 29 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"personal-container\">\r\n    <h2>我的收藏</h2>\r\n    <div class=\"personal-box\">\r\n        <div style=\"padding-top:20px;\" ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>\r\n            <div class='waterfall-img'>\r\n            <img ng-src='{{img.url}}'>\r\n            <span class='cover-white'></span>\r\n            <a class=\"collect-small\" ng-click=\"cancelCollect(img.url)\"><i></i></a>\r\n            <a class=\"download-small\" ng-href=\"{{img.url}}\" download><i></i></a>\r\n        </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"img-tips\" ng-show=\"isShowTips\">{{imgTips}}</div>\r\n</div>";
+module.exports = "<div class=\"personal-container\">\r\n    <h2>我的收藏</h2>\r\n    <div class=\"waterfall\">\r\n        <div class='waterfall-img' ng-repeat='img in imgInfo track by $index' ng-init='checkRepeat($last)'>\r\n            <img ng-src='{{img.url}}'>\r\n            <span class='cover-white' ng-click='openImg(img.largeUrl,img.height)' title='点击查看大图'></span>\r\n            <a class=\"collect-small\" ng-click=\"cancelCollect(img.url)\"><i></i></a>\r\n            <a class=\"download-small\" ng-href=\"{{img.largeUrl}}\" download><i></i></a>\r\n        </div>\r\n    </div>\r\n    <div id=\"loading\">正在加载中...</div>\r\n    <div class=\"img-tips\" ng-show=\"isShowTips\">{{imgTips}}</div>\r\n    <div class=\"black-overlay\" ng-if=\"isShowBigImg1\">\r\n        <img class=\"bigImg\" ng-src=\"{{bigUrl}}\">\r\n        <span class=\"closeImg\" ng-click=\"closeImg()\"><i></i></span>\r\n    </div>\r\n    <div class=\"black-overlay Black-overlay\" ng-if=\"isShowBigImg2\">\r\n        <img class=\"bigImg\" ng-src=\"{{bigUrl}}\">\r\n        <span class=\"closeImg\" ng-click=\"closeImg()\"><i></i></span>\r\n    </div>\r\n</div>";
 
 /***/ })
 ],[17]);
